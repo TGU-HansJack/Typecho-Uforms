@@ -1,0 +1,608 @@
+/* Uforms 通用样式文件 */
+
+/* CSS变量定义 */
+:root {
+    --uforms-primary: #3788d8;
+    --uforms-success: #27ae60;
+    --uforms-error: #e74c3c;
+    --uforms-warning: #f39c12;
+    --uforms-info: #3498db;
+    --uforms-border: #ddd;
+    --uforms-text: #333;
+    --uforms-bg: #fff;
+    --uforms-radius: 4px;
+    --uforms-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    --uforms-transition: all 0.3s ease;
+}
+
+/* 重置和基础样式 */
+.uforms-reset {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.uforms-container {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--uforms-text);
+}
+
+/* 通用组件 */
+.uforms-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border: 1px solid var(--uforms-border);
+    border-radius: var(--uforms-radius);
+    background: var(--uforms-bg);
+    color: var(--uforms-text);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--uforms-transition);
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.uforms-btn:hover {
+    background: #f8f9fa;
+    text-decoration: none;
+}
+
+.uforms-btn-primary {
+    background: var(--uforms-primary);
+    border-color: var(--uforms-primary);
+    color: white;
+}
+
+.uforms-btn-primary:hover {
+    background: #2c5aa0;
+    border-color: #2c5aa0;
+    color: white;
+}
+
+.uforms-btn-success {
+    background: var(--uforms-success);
+    border-color: var(--uforms-success);
+    color: white;
+}
+
+.uforms-btn-error {
+    background: var(--uforms-error);
+    border-color: var(--uforms-error);
+    color: white;
+}
+
+.uforms-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* 图标 */
+.uforms-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    vertical-align: middle;
+}
+
+/* 加载指示器 */
+.uforms-loading {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid var(--uforms-primary);
+    border-radius: 50%;
+    animation: uforms-spin 1s linear infinite;
+}
+
+@keyframes uforms-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 工具提示 */
+.uforms-tooltip {
+    position: relative;
+    cursor: help;
+}
+
+.uforms-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 6px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--uforms-transition);
+    z-index: 1000;
+}
+
+.uforms-tooltip:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 模态框基础样式 */
+.uforms-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--uforms-transition);
+}
+
+.uforms-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.uforms-modal-content {
+    background: white;
+    border-radius: var(--uforms-radius);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: auto;
+    transform: scale(0.7);
+    transition: var(--uforms-transition);
+}
+
+.uforms-modal.show .uforms-modal-content {
+    transform: scale(1);
+}
+
+/* 通知消息 */
+.uforms-notice {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 16px;
+    background: white;
+    border: 1px solid var(--uforms-border);
+    border-radius: var(--uforms-radius);
+    box-shadow: var(--uforms-shadow);
+    z-index: 10001;
+    transform: translateX(100%);
+    transition: var(--uforms-transition);
+}
+
+.uforms-notice.show {
+    transform: translateX(0);
+}
+
+.uforms-notice-success {
+    border-left: 4px solid var(--uforms-success);
+}
+
+.uforms-notice-error {
+    border-left: 4px solid var(--uforms-error);
+}
+
+.uforms-notice-warning {
+    border-left: 4px solid var(--uforms-warning);
+}
+
+.uforms-notice-info {
+    border-left: 4px solid var(--uforms-info);
+}
+
+/* 响应式工具类 */
+@media (max-width: 768px) {
+    .uforms-hide-mobile {
+        display: none !important;
+    }
+}
+
+@media (min-width: 769px) {
+    .uforms-hide-desktop {
+        display: none !important;
+    }
+}
+
+/* 文本工具类 */
+.uforms-text-left { text-align: left; }
+.uforms-text-center { text-align: center; }
+.uforms-text-right { text-align: right; }
+.uforms-text-muted { color: var(--uforms-text-muted, #666); }
+.uforms-text-success { color: var(--uforms-success); }
+.uforms-text-error { color: var(--uforms-error); }
+.uforms-text-warning { color: var(--uforms-warning); }
+.uforms-text-info { color: var(--uforms-info); }
+
+/* 间距工具类 */
+.uforms-m-0 { margin: 0; }
+.uforms-mt-1 { margin-top: 0.25rem; }
+.uforms-mt-2 { margin-top: 0.5rem; }
+.uforms-mt-3 { margin-top: 1rem; }
+.uforms-mb-1 { margin-bottom: 0.25rem; }
+.uforms-mb-2 { margin-bottom: 0.5rem; }
+.uforms-mb-3 { margin-bottom: 1rem; }
+
+.uforms-p-1 { padding: 0.25rem; }
+.uforms-p-2 { padding: 0.5rem; }
+.uforms-p-3 { padding: 1rem; }
+
+/* 错误页面样式 */
+.uforms-error-page {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.uforms-error-icon {
+    font-size: 48px;
+    color: var(--uforms-error);
+    margin-bottom: 20px;
+}
+
+.uforms-error-message {
+    color: var(--uforms-text);
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* 成功页面样式 */
+.uforms-success-page {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.uforms-success-icon {
+    font-size: 48px;
+    color: var(--uforms-success);
+    margin-bottom: 20px;
+}
+
+.uforms-success-message {
+    color: var(--uforms-text);
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* 表格样式 */
+.uforms-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.uforms-table th,
+.uforms-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--uforms-border);
+}
+
+.uforms-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+}
+
+.uforms-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+/* 分页样式 */
+.uforms-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.uforms-pagination a,
+.uforms-pagination span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+    border: 1px solid var(--uforms-border);
+    border-radius: var(--uforms-radius);
+    text-decoration: none;
+    color: var(--uforms-text);
+    font-size: 14px;
+    transition: var(--uforms-transition);
+}
+
+.uforms-pagination a:hover {
+    background: var(--uforms-primary);
+    border-color: var(--uforms-primary);
+    color: white;
+    text-decoration: none;
+}
+
+.uforms-pagination .current {
+    background: var(--uforms-primary);
+    border-color: var(--uforms-primary);
+    color: white;
+}
+
+/* 标签样式 */
+.uforms-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.uforms-badge-primary {
+    background: var(--uforms-primary);
+    color: white;
+}
+
+.uforms-badge-success {
+    background: var(--uforms-success);
+    color: white;
+}
+
+.uforms-badge-error {
+    background: var(--uforms-error);
+    color: white;
+}
+
+.uforms-badge-warning {
+    background: var(--uforms-warning);
+    color: white;
+}
+
+.uforms-badge-info {
+    background: var(--uforms-info);
+    color: white;
+}
+
+/* 卡片样式 */
+.uforms-card {
+    background: white;
+    border: 1px solid var(--uforms-border);
+    border-radius: var(--uforms-radius);
+    box-shadow: var(--uforms-shadow);
+    overflow: hidden;
+}
+
+.uforms-card-header {
+    padding: 16px 20px;
+    background: #f8f9fa;
+    border-bottom: 1px solid var(--uforms-border);
+    font-weight: 600;
+}
+
+.uforms-card-body {
+    padding: 20px;
+}
+
+.uforms-card-footer {
+    padding: 16px 20px;
+    background: #f8f9fa;
+    border-top: 1px solid var(--uforms-border);
+}
+
+/* 列表样式 */
+.uforms-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.uforms-list-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.uforms-list-item:last-child {
+    border-bottom: none;
+}
+
+/* 进度条 */
+.uforms-progress {
+    width: 100%;
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.uforms-progress-bar {
+    height: 100%;
+    background: var(--uforms-primary);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+/* 选项卡 */
+.uforms-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--uforms-border);
+}
+
+.uforms-tab {
+    padding: 12px 16px;
+    border: none;
+    background: none;
+    color: var(--uforms-text);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: var(--uforms-transition);
+}
+
+.uforms-tab:hover {
+    background: #f8f9fa;
+}
+
+.uforms-tab.active {
+    color: var(--uforms-primary);
+    border-bottom-color: var(--uforms-primary);
+}
+
+.uforms-tab-content {
+    padding: 20px 0;
+    display: none;
+}
+
+.uforms-tab-content.active {
+    display: block;
+}
+
+/* 手风琴 */
+.uforms-accordion {
+    border: 1px solid var(--uforms-border);
+    border-radius: var(--uforms-radius);
+    overflow: hidden;
+}
+
+.uforms-accordion-item {
+    border-bottom: 1px solid var(--uforms-border);
+}
+
+.uforms-accordion-item:last-child {
+    border-bottom: none;
+}
+
+.uforms-accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    background: #f8f9fa;
+    cursor: pointer;
+    font-weight: 500;
+    transition: var(--uforms-transition);
+}
+
+.uforms-accordion-header:hover {
+    background: #e9ecef;
+}
+
+.uforms-accordion-content {
+    padding: 20px;
+    display: none;
+}
+
+.uforms-accordion-item.active .uforms-accordion-content {
+    display: block;
+}
+
+/* 下拉菜单 */
+.uforms-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.uforms-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 160px;
+    background: white;
+    border: 1px solid var(--uforms-border);
+    border-radius: var(--uforms-radius);
+    box-shadow: var(--uforms-shadow);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: var(--uforms-transition);
+}
+
+.uforms-dropdown.show .uforms-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.uforms-dropdown-item {
+    display: block;
+    padding: 8px 16px;
+    color: var(--uforms-text);
+    text-decoration: none;
+    transition: var(--uforms-transition);
+}
+
+.uforms-dropdown-item:hover {
+    background: #f8f9fa;
+    text-decoration: none;
+}
+
+/* 搜索框 */
+.uforms-search {
+    position: relative;
+    display: inline-block;
+}
+
+.uforms-search input {
+    padding-right: 36px;
+}
+
+.uforms-search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--uforms-text-muted, #666);
+}
+
+/* 空状态 */
+.uforms-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--uforms-text-muted, #666);
+}
+
+.uforms-empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+/* 辅助功能增强 */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* 焦点样式 */
+.uforms-container *:focus {
+    outline: 2px solid var(--uforms-primary);
+    outline-offset: 2px;
+}
+
+/* 禁用状态 */
+.disabled,
+[disabled] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}

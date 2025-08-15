@@ -1,0 +1,501 @@
+/* Uforms 管理页面样式 */
+
+/* 引入Fomantic UI */
+@import url('../../lib/fomantic-ui/dist/semantic.min.css');
+
+/* 基础变量定义 */
+:root {
+    --uform-primary: #3788d8;
+    --uform-success: #27ae60;
+    --uform-warning: #f39c12;
+    --uform-error: #e74c3c;
+    --uform-info: #3498db;
+    --uform-light: #ecf0f1;
+    --uform-dark: #2c3e50;
+    --uform-border: #e0e0e0;
+    --uform-text: #333;
+    --uform-text-light: #666;
+    --uform-text-muted: #999;
+    --uform-bg: #ffffff;
+    --uform-bg-light: #f8f9fa;
+    --uform-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    --uform-radius: 6px;
+    --uform-spacing: 15px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+    background: #fff;
+}
+
+/* 主容器 */
+.manage-container {
+    padding: 20px;
+    background: var(--uform-bg-light);
+}
+
+.main {
+    background: #fff;
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    flex: 1;
+    width: 100%;
+}
+/* 顶部导航 - 全宽 */
+.uforms-header {
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.uforms-header h1 {
+    margin: 0;
+    padding: 20px 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.uforms-nav {
+    display: flex;
+    margin: 0 -20px;
+    background: #fafafa;
+    border-top: 1px solid #e5e5e5;
+    width: calc(100% + 40px);
+}
+
+.uforms-nav a {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.uforms-nav a:hover {
+    color: #333;
+    background: #f0f0f0;
+}
+
+.uforms-nav a.active {
+    color: #333;
+    background: #fff;
+    border-bottom-color: #999;
+}
+
+.uforms-nav a i {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+/* 统计卡片 */
+.stats-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: var(--uform-bg);
+    border-radius: var(--uform-radius);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: var(--uform-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid var(--uform-border);
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    background: rgba(55, 136, 216, 0.1);
+    color: var(--uform-primary);
+    flex-shrink: 0;
+}
+
+.stat-icon.published {
+    background: rgba(39, 174, 96, 0.1);
+    color: var(--uform-success);
+}
+
+.stat-icon.new {
+    background: rgba(243, 156, 18, 0.1);
+    color: var(--uform-warning);
+}
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--uform-dark);
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--uform-text-light);
+}
+
+/* 工具栏 */
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+    background: var(--uform-bg);
+    padding: 20px;
+    border-radius: var(--uform-radius);
+    box-shadow: var(--uform-shadow);
+    border: 1px solid var(--uform-border);
+}
+
+.toolbar-left,
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.toolbar .ui.input {
+    min-width: 250px;
+}
+
+.filter-box {
+    min-width: 150px;
+}
+
+/* 批量操作 */
+.bulk-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    padding: 10px 15px 10px 40px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    width: 250px;
+    transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #3788d8;
+    box-shadow: 0 0 0 2px rgba(55,136,216,0.2);
+}
+
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.filter-box select {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    background: #fff;
+    cursor: pointer;
+}
+
+/* 搜索框 */
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-box input {
+    width: 300px;
+    padding: 10px 40px 10px 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+    background: #fff;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #999;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.search-box button {
+    position: absolute;
+    right: 8px;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: #666;
+    border-radius: 4px;
+}
+
+/* 表单表格 */
+.forms-table-container {
+    background: var(--uform-bg);
+    border-radius: var(--uform-radius);
+    box-shadow: var(--uform-shadow);
+    overflow: hidden;
+    border: 1px solid var(--uform-border);
+}
+
+.forms-table {
+    width: 100%;
+    border: none;
+}
+
+.forms-table th,
+.forms-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--uform-border);
+}
+
+.forms-table th {
+    background: var(--uform-bg-light);
+    font-weight: 600;
+    color: var(--uform-dark);
+}
+
+.check-column {
+    width: 40px;
+    text-align: center;
+}
+
+.title-column {
+    min-width: 200px;
+}
+
+.status-column {
+    width: 100px;
+}
+
+.submissions-column {
+    width: 100px;
+    text-align: center;
+}
+
+.author-column {
+    width: 120px;
+}
+
+.date-column {
+    width: 150px;
+}
+
+.actions-column {
+    width: 150px;
+    text-align: center;
+}
+
+.form-title strong {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--uform-dark);
+}
+
+.form-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.form-name {
+    font-size: 12px;
+    color: var(--uform-text-muted);
+    font-family: monospace;
+}
+
+.form-description {
+    font-size: 12px;
+    color: var(--uform-text-light);
+}
+
+/* 状态标签 */
+.status-badge {
+    font-size: 12px;
+    padding: 4px 8px;
+}
+
+.status-badge.status-draft {
+    background: #f0f0f0;
+    color: #666;
+}
+
+.status-badge.status-published {
+    background: rgba(39, 174, 96, 0.1);
+    color: var(--uform-success);
+}
+
+.status-badge.status-archived {
+    background: rgba(243, 156, 18, 0.1);
+    color: var(--uform-warning);
+}
+
+/* 操作按钮 */
+.row-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+/* 下拉菜单 */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    min-width: 160px;
+    display: none;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu a {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-menu a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu a:hover {
+    background: #f8f9fa;
+}
+
+.dropdown-menu i {
+    margin-right: 8px;
+    width: 16px;
+    text-align: center;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background: #eee;
+    margin: 5px 0;
+}
+
+/* 分页 */
+.ui.pagination.menu {
+    margin: 20px 0;
+    justify-content: center;
+}
+
+.ui.pagination.menu .item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
+/* 空状态 */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--uform-text-light);
+}
+
+.empty-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: var(--uform-border);
+}
+
+.empty-state h3 {
+    margin: 0 0 10px 0;
+    color: var(--uform-dark);
+}
+
+.empty-state p {
+    margin: 0 0 20px 0;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .toolbar-left,
+    .toolbar-right {
+        justify-content: center;
+    }
+    
+    .stats-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .forms-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .forms-table th,
+    .forms-table td {
+        white-space: nowrap;
+    }
+}
+

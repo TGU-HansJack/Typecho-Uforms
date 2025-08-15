@@ -1,0 +1,780 @@
+/* Uforms 前端样式 - 完整版本 */
+
+:root {
+    --uform-primary: #3788d8;
+    --uform-primary-hover: #2c5aa0;
+    --uform-success: #27ae60;
+    --uform-error: #e74c3c;
+    --uform-warning: #f39c12;
+    --uform-info: #3498db;
+    --uform-border: #ddd;
+    --uform-border-focus: #3788d8;
+    --uform-bg: #ffffff;
+    --uform-text: #333;
+    --uform-text-light: #666;
+    --uform-text-muted: #999;
+    --uform-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    --uform-radius: 4px;
+    --uform-spacing: 15px;
+    --uform-transition: all 0.3s ease;
+}
+
+/* 表单容器 */
+.uform {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--uform-spacing);
+    background: var(--uform-bg);
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius);
+    box-shadow: var(--uform-shadow);
+}
+
+.uform-header {
+    margin-bottom: calc(var(--uform-spacing) * 2);
+    text-align: center;
+}
+
+.uform-title {
+    margin: 0 0 var(--uform-spacing) 0;
+    color: var(--uform-text);
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.uform-description {
+    margin: 0;
+    color: var(--uform-text-light);
+    line-height: 1.5;
+}
+
+/* 必填提示 */
+.uform-required-note {
+    margin-bottom: var(--uform-spacing);
+    padding: 10px;
+    background: #f8f9fa;
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius);
+    font-size: 14px;
+    color: var(--uform-text-muted);
+}
+
+/* 字段容器 */
+.uform-field {
+    margin-bottom: var(--uform-spacing);
+    position: relative;
+}
+
+.uform-field.width-half {
+    width: calc(50% - 7.5px);
+    display: inline-block;
+}
+
+.uform-field.width-third {
+    width: calc(33.333% - 10px);
+    display: inline-block;
+}
+
+.uform-field.width-quarter {
+    width: calc(25% - 11.25px);
+    display: inline-block;
+}
+
+.uform-field.width-half:nth-child(even),
+.uform-field.width-third:nth-child(3n),
+.uform-field.width-quarter:nth-child(4n) {
+    margin-right: 0;
+}
+
+.uform-field.width-half + .uform-field.width-half,
+.uform-field.width-third + .uform-field.width-third,
+.uform-field.width-quarter + .uform-field.width-quarter {
+    margin-left: var(--uform-spacing);
+}
+
+/* 字段标签 */
+.uform-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: var(--uform-text);
+    font-size: 14px;
+}
+
+.required-mark {
+    color: var(--uform-error);
+    font-weight: bold;
+}
+
+/* 输入框基础样式 */
+.uform-input,
+.uform-textarea,
+.uform-select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius);
+    font-size: 14px;
+    font-family: inherit;
+    transition: var(--uform-transition);
+    background: var(--uform-bg);
+    color: var(--uform-text);
+    box-sizing: border-box;
+}
+
+.uform-input:focus,
+.uform-textarea:focus,
+.uform-select:focus {
+    outline: none;
+    border-color: var(--uform-border-focus);
+    box-shadow: 0 0 0 2px rgba(55, 136, 216, 0.1);
+}
+
+.uform-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* 单选和复选框 */
+.uform-radio-group,
+.uform-checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.uform-radio-label,
+.uform-checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--uform-text);
+    gap: 8px;
+}
+
+.uform-radio-label input,
+.uform-checkbox-label input {
+    margin: 0;
+    width: auto;
+}
+
+.radio-text,
+.checkbox-text {
+    line-height: 1.4;
+}
+
+/* 文件上传 */
+.uform-file {
+    padding: 8px;
+    border: 2px dashed var(--uform-border);
+    background: #fafafa;
+    cursor: pointer;
+    transition: var(--uform-transition);
+}
+
+.uform-file:hover {
+    border-color: var(--uform-primary);
+    background: rgba(55, 136, 216, 0.05);
+}
+
+.file-help {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--uform-text-muted);
+}
+
+/* 范围滑块 */
+.range-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.uform-range {
+    flex: 1;
+    height: 6px;
+    background: #e9ecef;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+}
+
+.uform-range::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--uform-primary);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.uform-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--uform-primary);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+.range-output {
+    min-width: 40px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--uform-text-light);
+    padding: 2px 6px;
+    background: #f8f9fa;
+    border-radius: var(--uform-radius);
+}
+
+/* 评分字段 */
+.uform-rating-group {
+    display: flex;
+    gap: 4px;
+}
+
+.rating-star {
+    font-size: 24px;
+    color: #ddd;
+    cursor: pointer;
+    transition: var(--uform-transition);
+    user-select: none;
+}
+
+.rating-star:hover,
+.rating-star.active {
+    color: #ffd700;
+}
+
+/* 签名板 */
+.uform-signature-container {
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius);
+    padding: 10px;
+    background: var(--uform-bg);
+}
+
+.signature-canvas {
+    border: 1px dashed var(--uform-border);
+    cursor: crosshair;
+    display: block;
+    margin: 0 auto;
+    background: white;
+}
+
+.signature-controls {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.signature-clear {
+    padding: 6px 12px;
+    border: 1px solid var(--uform-border);
+    background: white;
+    color: var(--uform-text);
+    border-radius: var(--uform-radius);
+    cursor: pointer;
+    font-size: 12px;
+    transition: var(--uform-transition);
+}
+
+.signature-clear:hover {
+    background: #f8f9fa;
+}
+
+/* 标签输入 */
+.uform-tags-container {
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius);
+    padding: 8px;
+    background: var(--uform-bg);
+    min-height: 40px;
+}
+
+.tags-input-container {
+    margin-bottom: 8px;
+}
+
+.tags-input {
+    border: none;
+    outline: none;
+    padding: 4px;
+    width: 100%;
+    font-size: 14px;
+}
+
+.tags-display {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag-item {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    background: var(--uform-primary);
+    color: white;
+    border-radius: 12px;
+    font-size: 12px;
+    gap: 4px;
+}
+
+.tag-remove {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--uform-transition);
+}
+
+.tag-remove:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.tags-suggestions {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--uform-border);
+}
+
+.tag-suggestion {
+    display: inline-block;
+    margin: 2px 4px 2px 0;
+    padding: 4px 8px;
+    background: #f8f9fa;
+    border: 1px solid var(--uform-border);
+    border-radius: 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: var(--uform-transition);
+}
+
+.tag-suggestion:hover {
+    background: var(--uform-primary);
+    color: white;
+}
+
+/* 级联选择 */
+.uform-cascade-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.cascade-select {
+    flex: 1;
+    min-width: 150px;
+    padding: 8px 12px;
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius);
+    background: var(--uform-bg);
+    color: var(--uform-text);
+    font-size: 14px;
+}
+
+.cascade-select:disabled {
+    background: #f8f9fa;
+    color: var(--uform-text-muted);
+}
+
+/* 验证码 */
+.captcha-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.captcha-image {
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius);
+}
+
+.captcha-input {
+    flex: 1;
+}
+
+.captcha-refresh {
+    padding: 8px 12px;
+    border: 1px solid var(--uform-border);
+    background: white;
+    color: var(--uform-text);
+    border-radius: var(--uform-radius);
+    cursor: pointer;
+    font-size: 12px;
+    transition: var(--uform-transition);
+}
+
+.captcha-refresh:hover {
+    background: #f8f9fa;
+}
+
+/* 帮助文本 */
+.uform-help {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--uform-text-muted);
+    line-height: 1.4;
+}
+
+/* 错误样式 */
+.uform-field.has-error .uform-label {
+    color: var(--uform-error);
+}
+
+.uform-field.has-error .uform-input,
+.uform-field.has-error .uform-textarea,
+.uform-field.has-error .uform-select {
+    border-color: var(--uform-error);
+}
+
+.uform-field-error {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--uform-error);
+    line-height: 1.4;
+}
+
+/* 消息容器 */
+.uform-messages {
+    margin-bottom: var(--uform-spacing);
+}
+
+.uform-message {
+    padding: 12px 15px;
+    border-radius: var(--uform-radius);
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.uform-message-success {
+    background: rgba(39, 174, 96, 0.1);
+    color: var(--uform-success);
+    border-left: 4px solid var(--uform-success);
+}
+
+.uform-message-error {
+    background: rgba(231, 76, 60, 0.1);
+    color: var(--uform-error);
+    border-left: 4px solid var(--uform-error);
+}
+
+.uform-message-warning {
+    background: rgba(243, 156, 18, 0.1);
+    color: var(--uform-warning);
+    border-left: 4px solid var(--uform-warning);
+}
+
+.uform-message-info {
+    background: rgba(52, 152, 219, 0.1);
+    color: var(--uform-info);
+    border-left: 4px solid var(--uform-info);
+}
+
+/* 提交按钮区域 */
+.uform-actions {
+    margin-top: calc(var(--uform-spacing) * 2);
+    text-align: center;
+    border-top: 1px solid #f0f0f0;
+    padding-top: var(--uform-spacing);
+}
+
+.uform-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background: var(--uform-primary);
+    color: white;
+    border: none;
+    border-radius: var(--uform-radius);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--uform-transition);
+    min-width: 120px;
+    gap: 8px;
+}
+
+.uform-submit:hover:not(:disabled) {
+    background: var(--uform-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(55, 136, 216, 0.3);
+}
+
+.uform-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.submit-loading {
+    font-size: 12px;
+}
+
+/* 成功页面 */
+.uform-success {
+    text-align: center;
+    padding: calc(var(--uform-spacing) * 2);
+}
+
+.success-message {
+    color: var(--uform-success);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.uform-custom-success {
+    padding: var(--uform-spacing);
+}
+
+/* 特殊字段样式 */
+.uform-heading {
+    margin: calc(var(--uform-spacing) * 1.5) 0 var(--uform-spacing) 0;
+    color: var(--uform-text);
+    font-weight: 600;
+}
+
+.uform-paragraph {
+    margin: var(--uform-spacing) 0;
+    color: var(--uform-text-light);
+    line-height: 1.5;
+}
+
+.uform-divider {
+    margin: calc(var(--uform-spacing) * 1.5) 0;
+    border: none;
+    height: 1px;
+    background: var(--uform-border);
+}
+
+.uform-html {
+    margin: var(--uform-spacing) 0;
+}
+
+/* 系统字段 */
+.system-field {
+    background: #f8f9fa !important;
+    cursor: not-allowed;
+}
+
+/* 主题样式 */
+.uform-minimal {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+}
+
+.uform-minimal .uform-input,
+.uform-minimal .uform-textarea,
+.uform-minimal .uform-select {
+    border: none;
+    border-bottom: 2px solid var(--uform-border);
+    border-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
+    background: transparent;
+}
+
+.uform-minimal .uform-input:focus,
+.uform-minimal .uform-textarea:focus,
+.uform-minimal .uform-select:focus {
+    border-bottom-color: var(--uform-primary);
+    box-shadow: none;
+}
+
+.uform-modern {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.uform-modern .uform-label {
+    color: white;
+}
+
+.uform-modern .uform-input,
+.uform-modern .uform-textarea,
+.uform-modern .uform-select {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: white;
+}
+
+.uform-modern .uform-input::placeholder,
+.uform-modern .uform-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .uform {
+        margin: 10px;
+        padding: var(--uform-spacing);
+    }
+    
+    .uform-field.width-half,
+    .uform-field.width-third,
+    .uform-field.width-quarter {
+        width: 100%;
+        display: block;
+        margin-left: 0;
+    }
+    
+    .uform-title {
+        font-size: 20px;
+    }
+    
+    .captcha-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .captcha-image {
+        align-self: center;
+    }
+    
+    .uform-cascade-container {
+        flex-direction: column;
+    }
+    
+    .cascade-select {
+        min-width: auto;
+    }
+    
+    .signature-canvas {
+        width: 100%;
+        height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .uform {
+        margin: 5px;
+        padding: 10px;
+    }
+    
+    .uform-submit {
+        width: 100%;
+    }
+    
+    .range-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .range-output {
+        align-self: center;
+        margin-top: 5px;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.uform-field {
+    animation: fadeIn 0.3s ease;
+}
+
+.uform-message {
+    animation: fadeIn 0.3s ease;
+}
+
+/* 加载动画 */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.submit-loading::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 6px;
+}
+
+/* 可访问性增强 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    :root {
+        --uform-border: #000;
+        --uform-text: #000;
+        --uform-bg: #fff;
+    }
+    
+    .uform-input,
+    .uform-textarea,
+    .uform-select {
+        border-width: 2px;
+    }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --uform-bg: #1a1a1a;
+        --uform-text: #ffffff;
+        --uform-text-light: #cccccc;
+        --uform-text-muted: #999999;
+        --uform-border: #404040;
+    }
+    
+    .uform-input,
+    .uform-textarea,
+    .uform-select {
+        background: #2a2a2a;
+        color: white;
+    }
+    
+    .signature-canvas {
+        background: #2a2a2a;
+    }
+}
+
+/* 打印样式 */
+@media print {
+    .uform-submit,
+    .captcha-refresh,
+    .signature-clear,
+    .tag-remove {
+        display: none;
+    }
+    
+    .uform {
+        box-shadow: none;
+        border: 1px solid #ccc;
+    }
+    
+    .uform-input,
+    .uform-textarea,
+    .uform-select {
+        border: 1px solid #ccc;
+        background: white;
+    }
+}

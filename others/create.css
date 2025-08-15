@@ -1,0 +1,2972 @@
+/* Uforms Creator 样式 - 完整增强版本 */
+
+/* 基础变量定义 */
+:root {
+    --uform-primary: #3788d8;
+    --uform-primary-dark: #2c5aa0;
+    --uform-success: #27ae60;
+    --uform-warning: #f39c12;
+    --uform-error: #e74c3c;
+    --uform-info: #3498db;
+    --uform-light: #ecf0f1;
+    --uform-dark: #2c3e50;
+    --uform-border: #e0e0e0;
+    --uform-border-light: #f0f0f0;
+    --uform-text: #333;
+    --uform-text-light: #666;
+    --uform-text-muted: #999;
+    --uform-bg: #ffffff;
+    --uform-bg-light: #f8f9fa;
+    --uform-bg-dark: #fafafa;
+    --uform-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    --uform-shadow-light: 0 1px 3px rgba(0,0,0,0.05);
+    --uform-radius: 6px;
+    --uform-radius-small: 4px;
+    --uform-spacing: 15px;
+    --uform-spacing-small: 10px;
+    --uform-transition: all 0.3s ease;
+}
+
+/* 图标字体定义 */
+@font-face {
+    font-family: 'uforms-icons';
+    src: url('data:application/font-woff2;charset=utf-8;base64,') format('woff2');
+}
+
+.icon-drag:before { content: '⋮⋮'; }
+.icon-edit:before { content: '✏'; }
+.icon-copy:before { content: '⧉'; }
+.icon-trash:before { content: '🗑'; }
+.icon-move:before { content: '↕'; }
+.icon-plus:before { content: '+'; }
+.icon-check:before { content: '✓'; }
+.icon-error:before { content: '✕'; }
+.icon-loading:before { content: '↻'; }
+.icon-eye:before { content: '👁'; }
+.icon-grid:before { content: '⊞'; }
+.icon-desktop:before { content: '🖥'; }
+.icon-tablet:before { content: '📱'; }
+.icon-mobile:before { content: '📱'; }
+.icon-save:before { content: '💾'; }
+.icon-publish:before { content: '🚀'; }
+.icon-code:before { content: '{}'; }
+
+/* 顶部导航 - 全宽 */
+.uforms-header {
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 0 20px;
+    width: 100%;
+}
+
+.uforms-header h1 {
+    margin: 0;
+    padding: 20px 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+}
+
+.uforms-nav {
+    display: flex;
+    margin: 0 -20px;
+    background: #fafafa;
+    border-top: 1px solid #e5e5e5;
+    width: calc(100% + 40px);
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.uforms-nav::-webkit-scrollbar {
+    height: 3px;
+}
+
+.uforms-nav::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.uforms-nav::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 2px;
+}
+
+.uforms-nav a {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.uforms-nav a:hover {
+    color: #333;
+    background: #f0f0f0;
+}
+
+.uforms-nav a.active {
+    color: #333;
+    background: #fff;
+    border-bottom-color: #999;
+}
+
+.uforms-nav a i {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+/* 创建器主容器 */
+.uforms-creator {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 140px);
+    background: var(--uform-bg);
+    overflow: hidden;
+}
+
+.form-builder {
+    display: flex;
+    flex: 1;
+    background: var(--uform-bg);
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius);
+    overflow: hidden;
+    box-shadow: var(--uform-shadow-light);
+}
+
+/* 左侧字段库样式 */
+.fields-panel {
+    width: 280px;
+    min-width: 280px;
+    background: var(--uform-bg);
+    border-right: 1px solid var(--uform-border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.fields-panel h3 {
+    margin: 0;
+    padding: 20px;
+    background: var(--uform-bg-light);
+    border-bottom: 1px solid var(--uform-border);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--uform-dark);
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.fields-panel h3 i {
+    margin-right: 8px;
+    color: var(--uform-primary);
+}
+
+.fields-panel-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 15px;
+    scroll-behavior: smooth;
+}
+
+/* 字段分类的滑动容器 */
+.field-category {
+    margin-bottom: 25px;
+    border-radius: var(--uform-radius);
+    overflow: hidden;
+    transition: var(--uform-transition);
+}
+
+.field-category:last-child {
+    margin-bottom: 15px;
+}
+
+.field-category h4 {
+    margin: 0;
+    padding: 12px 15px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--uform-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--uform-bg-dark);
+    border-bottom: 1px solid var(--uform-border-light);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--uform-transition);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.field-category h4:hover {
+    background: var(--uform-primary);
+    color: white;
+}
+
+.field-category h4 i {
+    margin-right: 6px;
+    font-size: 14px;
+    color: var(--uform-primary);
+    transition: var(--uform-transition);
+}
+
+.field-category h4:hover i {
+    color: white;
+}
+
+.field-category h4::after {
+    content: '▼';
+    margin-left: auto;
+    font-size: 10px;
+    transition: transform 0.3s ease;
+}
+
+.field-category.collapsed h4::after {
+    transform: rotate(-90deg);
+}
+
+.field-items {
+    display: grid;
+    gap: 8px;
+    padding: 12px;
+    background: var(--uform-bg);
+    max-height: 400px;
+    overflow-y: auto;
+    transition: var(--uform-transition);
+}
+
+.field-category.collapsed .field-items {
+    max-height: 0;
+    padding: 0 12px;
+    overflow: hidden;
+}
+
+.field-items::-webkit-scrollbar {
+    width: 4px;
+}
+
+.field-items::-webkit-scrollbar-track {
+    background: var(--uform-bg-light);
+    border-radius: 2px;
+}
+
+.field-items::-webkit-scrollbar-thumb {
+    background: var(--uform-border);
+    border-radius: 2px;
+}
+
+.field-item {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background: var(--uform-bg);
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius-small);
+    cursor: pointer;
+    transition: var(--uform-transition);
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+}
+
+.field-item:hover {
+    border-color: var(--uform-primary);
+    background: rgba(55, 136, 216, 0.02);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(55, 136, 216, 0.15);
+}
+
+.field-item:active {
+    transform: translateY(0);
+}
+
+.field-item-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.field-item i {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    color: var(--uform-primary);
+    font-size: 14px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.field-item span {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--uform-text);
+    line-height: 1.2;
+}
+
+.field-description {
+    font-size: 11px;
+    color: var(--uform-text-muted);
+    line-height: 1.3;
+    margin-top: 4px;
+}
+
+/* 拖拽状态 */
+.field-item.dragging {
+    opacity: 0.5;
+    transform: rotate(5deg);
+}
+
+.field-item.sortable-ghost {
+    opacity: 0.3;
+    background: rgba(55, 136, 216, 0.1);
+}
+
+/* 中间画布区域 */
+.form-canvas {
+    flex: 1;
+    background: var(--uform-bg-light);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.canvas-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: var(--uform-bg);
+    border-bottom: 1px solid var(--uform-border);
+    flex-shrink: 0;
+}
+
+.toolbar-left,
+.toolbar-center,
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.preview-btn {
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    background: var(--uform-bg);
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius-small);
+    color: var(--uform-text-light);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--uform-transition);
+    text-decoration: none;
+}
+
+.preview-btn i {
+    margin-right: 6px;
+    font-size: 12px;
+}
+
+.preview-btn:hover,
+.preview-btn.active {
+    background: var(--uform-primary);
+    border-color: var(--uform-primary);
+    color: white;
+    text-decoration: none;
+}
+
+.canvas-toolbar button {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: var(--uform-bg);
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius-small);
+    color: var(--uform-text-light);
+    font-size: 12px;
+    cursor: pointer;
+    transition: var(--uform-transition);
+}
+
+.canvas-toolbar button i {
+    margin-right: 6px;
+    font-size: 14px;
+}
+
+.canvas-toolbar button:hover {
+    background: var(--uform-bg-light);
+    border-color: var(--uform-text-light);
+    color: var(--uform-text);
+}
+
+.canvas-toolbar button.active {
+    background: var(--uform-primary);
+    border-color: var(--uform-primary);
+    color: white;
+}
+
+#canvas-scale {
+    font-size: 12px;
+    color: var(--uform-text-muted);
+    padding: 4px 8px;
+    background: var(--uform-bg-dark);
+    border-radius: var(--uform-radius-small);
+    min-width: 60px;
+    text-align: center;
+}
+
+/* 画布内容 */
+.canvas-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* 网格背景 */
+.canvas-content.show-grid {
+    background-image: 
+        linear-gradient(rgba(55, 136, 216, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(55, 136, 216, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* 空状态 */
+.canvas-drop-zone {
+    min-height: 400px;
+    border: 2px dashed var(--uform-border);
+    border-radius: var(--uform-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--uform-bg);
+    transition: var(--uform-transition);
+}
+
+.canvas-drop-zone:hover {
+    border-color: var(--uform-primary);
+    background: rgba(55, 136, 216, 0.02);
+}
+
+.canvas-drop-zone.drag-over {
+    border-color: var(--uform-primary);
+    background: rgba(55, 136, 216, 0.05);
+    border-style: solid;
+}
+
+.drop-hint {
+    text-align: center;
+    color: var(--uform-text-muted);
+    max-width: 400px;
+}
+
+.drop-icon {
+    font-size: 48px;
+    color: var(--uform-border);
+    margin-bottom: 15px;
+}
+
+.drop-hint h3 {
+    font-size: 18px;
+    color: var(--uform-text-light);
+    margin: 0 0 8px 0;
+    font-weight: 500;
+}
+
+.drop-hint p {
+    margin: 0 0 20px 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.quick-start {
+    margin-top: 20px;
+}
+
+/* 画布中的字段 */
+.canvas-field {
+    background: var(--uform-bg);
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius);
+    margin-bottom: 15px;
+    transition: var(--uform-transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.canvas-field:hover {
+    border-color: var(--uform-primary);
+    box-shadow: 0 2px 8px rgba(55, 136, 216, 0.1);
+}
+
+.canvas-field.selected {
+    border-color: var(--uform-primary);
+    box-shadow: 0 0 0 2px rgba(55, 136, 216, 0.2);
+}
+
+.canvas-field.sorting {
+    opacity: 0.5;
+}
+
+.canvas-field.field-added {
+    animation: fieldAdded 0.6s ease;
+}
+
+.canvas-field.field-removing {
+    animation: fieldRemoving 0.3s ease forwards;
+}
+
+@keyframes fieldAdded {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    50% {
+        transform: translateY(-5px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes fieldRemoving {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+}
+
+/* 字段头部 */
+.field-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background: var(--uform-bg-dark);
+    border-bottom: 1px solid var(--uform-border-light);
+    position: relative;
+}
+
+.field-drag-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    color: var(--uform-text-muted);
+    cursor: grab;
+    transition: var(--uform-transition);
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.field-drag-handle:hover {
+    background: var(--uform-border-light);
+    color: var(--uform-text-light);
+}
+
+.field-drag-handle:active {
+    cursor: grabbing;
+}
+
+.field-label {
+    flex: 1;
+    font-weight: 500;
+    color: var(--uform-text);
+    font-size: 14px;
+}
+
+.field-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: 10px;
+}
+
+.field-type {
+    font-size: 10px;
+    padding: 2px 6px;
+    background: var(--uform-info);
+    color: white;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    font-weight: 500;
+}
+
+.field-required {
+    font-size: 10px;
+    padding: 2px 6px;
+    background: var(--uform-error);
+    color: white;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    font-weight: 500;
+}
+
+.field-actions {
+    display: flex;
+    gap: 4px;
+    opacity: 0;
+    transition: var(--uform-transition);
+}
+
+.canvas-field:hover .field-actions {
+    opacity: 1;
+}
+
+.field-action {
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: var(--uform-radius-small);
+    background: var(--uform-bg);
+    color: var(--uform-text-muted);
+    cursor: pointer;
+    transition: var(--uform-transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    position: relative;
+    outline: none;
+}
+
+.field-action::before {
+    font-family: 'uforms-icons', sans-serif;
+    font-size: 12px;
+}
+
+.field-action:hover {
+    background: var(--uform-border-light);
+    color: var(--uform-text);
+}
+
+.field-edit::before {
+    content: '✏';
+}
+
+.field-edit:hover {
+    background: var(--uform-info);
+    color: white;
+}
+
+.field-copy::before {
+    content: '⧉';
+}
+
+.field-copy:hover {
+    background: var(--uform-success);
+    color: white;
+}
+
+.field-delete::before {
+    content: '🗑';
+}
+
+.field-delete:hover {
+    background: var(--uform-error);
+    color: white;
+}
+
+.field-move::before {
+    content: '↕';
+}
+
+.field-move:hover {
+    background: var(--uform-warning);
+    color: white;
+}
+
+/* 工具提示 */
+.field-action[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--uform-dark);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    white-space: nowrap;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+}
+
+/* 字段内容 */
+.field-body {
+    padding: 15px;
+}
+
+.field-body input,
+.field-body textarea,
+.field-body select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius-small);
+    font-size: 14px;
+    background: var(--uform-bg-dark);
+    color: var(--uform-text-muted);
+    pointer-events: none;
+    resize: none;
+}
+
+.field-body textarea {
+    min-height: 80px;
+}
+
+.radio-group,
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.radio-option,
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--uform-text-muted);
+    cursor: default;
+}
+
+.radio-option input,
+.checkbox-option input {
+    width: auto;
+    margin: 0;
+    pointer-events: none;
+}
+
+.file-info {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--uform-text-muted);
+}
+
+.range-output {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 2px 8px;
+    background: var(--uform-bg-light);
+    border-radius: var(--uform-radius-small);
+    font-size: 12px;
+    color: var(--uform-text-light);
+}
+
+.rating-group {
+    display: flex;
+    gap: 4px;
+}
+
+.rating-star {
+    font-size: 20px;
+    color: var(--uform-border);
+    cursor: default;
+}
+
+.form-heading {
+    margin: 0;
+    color: var(--uform-text);
+    font-weight: 600;
+}
+
+.form-paragraph {
+    margin: 0;
+    color: var(--uform-text-light);
+    line-height: 1.5;
+}
+
+.form-divider {
+    margin: 10px 0;
+    border: none;
+    height: 1px;
+    background: var(--uform-border);
+}
+
+.hidden-field-info {
+    font-size: 12px;
+    color: var(--uform-text-muted);
+    background: var(--uform-bg-light);
+    padding: 8px 12px;
+    border-radius: var(--uform-radius-small);
+    font-style: italic;
+}
+
+.field-placeholder {
+    padding: 20px;
+    text-align: center;
+    color: var(--uform-text-muted);
+    font-style: italic;
+    background: var(--uform-bg-light);
+    border-radius: var(--uform-radius-small);
+}
+
+/* 字段属性预览 */
+.field-properties-preview {
+    padding: 8px 15px;
+    background: rgba(55, 136, 216, 0.02);
+    border-top: 1px solid var(--uform-border-light);
+    font-size: 11px;
+    color: var(--uform-text-muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.field-properties-preview:empty {
+    display: none;
+}
+
+.prop-item {
+    display: inline-block;
+    padding: 2px 6px;
+    background: var(--uform-bg);
+    border: 1px solid var(--uform-border);
+    border-radius: 10px;
+    font-size: 10px;
+}
+
+/* 右侧属性面板 */
+.properties-panel {
+    width: 320px;
+    min-width: 320px;
+    background: var(--uform-bg);
+    border-left: 1px solid var(--uform-border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.panel-tabs {
+    display: flex;
+    background: var(--uform-bg-light);
+    border-bottom: 1px solid var(--uform-border);
+}
+
+.tab-button {
+    flex: 1;
+    padding: 12px 8px;
+    border: none;
+    background: none;
+    color: var(--uform-text-light);
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--uform-transition);
+    border-bottom: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.tab-button i {
+    font-size: 14px;
+}
+
+.tab-button:hover {
+    background: var(--uform-bg);
+    color: var(--uform-text);
+}
+
+.tab-button.active {
+    background: var(--uform-bg);
+    color: var(--uform-primary);
+    border-bottom-color: var(--uform-primary);
+}
+
+.tab-content {
+    flex: 1;
+    overflow-y: auto;
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* 无选择状态 */
+.no-selection {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--uform-text-muted);
+}
+
+.no-selection-icon {
+    font-size: 48px;
+    color: var(--uform-border);
+    margin-bottom: 15px;
+}
+
+.no-selection h4 {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    color: var(--uform-text-light);
+    font-weight: 500;
+}
+
+.no-selection p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* 属性设置 */
+.field-properties {
+    padding: 0;
+}
+
+.property-group {
+    padding: 20px;
+    border-bottom: 1px solid var(--uform-border-light);
+}
+
+.property-group:last-child {
+    border-bottom: none;
+}
+
+.property-group h4 {
+    margin: 0 0 15px 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--uform-text);
+    display: flex;
+    align-items: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--uform-border-light);
+}
+
+.property-group h4 i {
+    margin-right: 8px;
+    color: var(--uform-primary);
+    font-size: 14px;
+}
+
+.property-item {
+    margin-bottom: 15px;
+}
+
+.property-item:last-child {
+    margin-bottom: 0;
+}
+
+.property-item label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--uform-text-light);
+}
+
+.property-item input,
+.property-item textarea,
+.property-item select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius-small);
+    font-size: 13px;
+    transition: var(--uform-transition);
+    background: var(--uform-bg);
+    color: var(--uform-text);
+}
+
+.property-item input:focus,
+.property-item textarea:focus,
+.property-item select:focus {
+    outline: none;
+    border-color: var(--uform-primary);
+    box-shadow: 0 0 0 2px rgba(55, 136, 216, 0.1);
+}
+
+.property-item textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.field-tip {
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--uform-text-muted);
+    line-height: 1.3;
+}
+
+.required {
+    color: var(--uform-error);
+}
+
+/* 复选框样式 */
+.checkbox-label {
+    display: flex !important;
+    align-items: center;
+    cursor: pointer;
+    font-size: 13px !important;
+    margin-bottom: 0 !important;
+    gap: 8px;
+    padding: 8px 0;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: auto !important;
+    margin: 0;
+    position: relative;
+}
+
+.checkbox-mark {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--uform-border);
+    border-radius: 3px;
+    background: var(--uform-bg);
+    transition: var(--uform-transition);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-mark {
+    background: var(--uform-primary);
+    border-color: var(--uform-primary);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-mark::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/* 输入组样式 */
+.input-group {
+    display: flex;
+    gap: 8px;
+}
+
+.input-group input {
+    flex: 1;
+}
+
+.input-group select {
+    min-width: 80px;
+}
+
+.color-picker-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.color-picker-group input[type="color"] {
+    width: 40px;
+    height: 32px;
+    padding: 0;
+    border-radius: var(--uform-radius-small);
+    cursor: pointer;
+}
+
+.color-picker-group input[type="text"] {
+    flex: 1;
+    font-family: 'Courier New', monospace;
+}
+
+/* 范围滑块 */
+input[type="range"] {
+    width: 100% !important;
+    height: 6px;
+    background: var(--uform-border-light);
+    border-radius: 3px;
+    outline: none;
+    padding: 0 !important;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--uform-primary);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--uform-primary);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+.range-value {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 12px;
+    color: var(--uform-text-light);
+    font-weight: 500;
+    min-width: 40px;
+    text-align: right;
+}
+
+/* 颜色网格 */
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.color-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.color-item label {
+    font-size: 11px;
+    margin-bottom: 0 !important;
+    min-width: 50px;
+}
+
+.color-item input[type="color"] {
+    width: 30px;
+    height: 24px;
+    border-radius: 3px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* 选项管理 */
+.options-list {
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius-small);
+    background: var(--uform-bg-dark);
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--uform-border-light);
+    gap: 8px;
+}
+
+.option-item:last-child {
+    border-bottom: none;
+}
+
+.option-drag {
+    cursor: grab;
+    color: var(--uform-text-muted);
+    font-size: 12px;
+    width: 16px;
+    text-align: center;
+}
+
+.option-drag:active {
+    cursor: grabbing;
+}
+
+.option-label,
+.option-value {
+    flex: 1;
+    padding: 4px 8px;
+    border: 1px solid var(--uform-border);
+    border-radius: 3px;
+    font-size: 12px;
+    background: var(--uform-bg);
+}
+
+.option-label:focus,
+.option-value:focus {
+    outline: none;
+    border-color: var(--uform-primary);
+}
+
+.option-remove {
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: var(--uform-error);
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--uform-transition);
+}
+
+.option-remove:hover {
+    background: #c0392b;
+}
+
+.options-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+}
+
+/* 条件逻辑 */
+.conditional-rules {
+    margin-top: 10px;
+    padding: 15px;
+    background: var(--uform-bg-dark);
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius-small);
+}
+
+.rule-builder {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rule-header {
+    font-size: 12px;
+    color: var(--uform-text-light);
+    font-weight: 500;
+}
+
+.rule-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: var(--uform-bg);
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius-small);
+}
+
+.rule-select,
+.rule-input {
+    flex: 1;
+    padding: 4px 6px;
+    border: 1px solid var(--uform-border);
+    border-radius: 3px;
+    font-size: 11px;
+}
+
+.rule-remove {
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: var(--uform-error);
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* 代码编辑器 */
+.code-editor {
+    font-family: 'Courier New', Monaco, monospace;
+    font-size: 12px;
+    line-height: 1.4;
+    resize: vertical;
+}
+
+.css-tips {
+    margin-top: 10px;
+}
+
+.css-tips details {
+    font-size: 11px;
+}
+
+.css-tips summary {
+    cursor: pointer;
+    color: var(--uform-primary);
+    font-weight: 500;
+}
+
+.css-tips ul {
+    margin: 8px 0 0 0;
+    padding-left: 20px;
+}
+
+.css-tips li {
+    margin-bottom: 2px;
+}
+
+.css-tips code {
+    background: var(--uform-bg-light);
+    padding: 1px 4px;
+    border-radius: 2px;
+    font-size: 10px;
+}
+
+/* 实时预览样式变量 */
+:root {
+    --preview-primary-color: #3788d8;
+    --preview-bg-color: #ffffff;
+    --preview-text-color: #333333;
+    --preview-border-color: #dddddd;
+    --preview-error-color: #e74c3c;
+    --preview-success-color: #27ae60;
+    --preview-warning-color: #f39c12;
+    --preview-field-spacing: 20px;
+    --preview-form-padding: 20px;
+    --preview-input-border-radius: 4px;
+    --preview-input-border-width: 1px;
+    --preview-input-height: 40px;
+}
+
+/* 实时预览样式应用 */
+.canvas-field.selected {
+    border-color: var(--preview-primary-color) !important;
+    box-shadow: 0 0 0 2px rgba(var(--preview-primary-color), 0.2) !important;
+}
+
+.field-required {
+    background: var(--preview-error-color) !important;
+}
+
+.field-type {
+    background: var(--preview-primary-color) !important;
+}
+
+/* 底部操作栏 */
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: var(--uform-bg);
+    border-top: 1px solid var(--uform-border);
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+    flex-shrink: 0;
+}
+
+.actions-left,
+.actions-center,
+.actions-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.actions-center {
+    flex: 1;
+    justify-content: center;
+}
+
+.save-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: var(--uform-radius-small);
+    font-weight: 500;
+    transition: var(--uform-transition);
+}
+
+.save-status.saving {
+    color: var(--uform-warning);
+    background: rgba(243, 156, 18, 0.1);
+}
+
+.save-status.saved {
+    color: var(--uform-success);
+    background: rgba(39, 174, 96, 0.1);
+}
+
+.save-status.success {
+    color: var(--uform-success);
+    background: rgba(39, 174, 96, 0.1);
+}
+
+.save-status.error {
+    color: var(--uform-error);
+    background: rgba(231, 76, 60, 0.1);
+}
+
+.save-status.unsaved {
+    color: var(--uform-warning);
+    background: rgba(243, 156, 18, 0.1);
+}
+
+.save-status i {
+    font-size: 12px;
+}
+
+.save-status .icon-loading {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 按钮样式 */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius-small);
+    background: var(--uform-bg);
+    color: var(--uform-text);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--uform-transition);
+    white-space: nowrap;
+}
+
+.btn:hover {
+    background: var(--uform-bg-light);
+    border-color: var(--uform-text-light);
+    color: var(--uform-text);
+    text-decoration: none;
+}
+
+.btn i {
+    margin-right: 6px;
+    font-size: 12px;
+}
+
+.btn-primary {
+    background: var(--uform-primary);
+    border-color: var(--uform-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--uform-primary-dark);
+    border-color: var(--uform-primary-dark);
+    color: white;
+}
+
+.btn-success {
+    background: var(--uform-success);
+    border-color: var(--uform-success);
+    color: white;
+}
+
+.btn-success:hover {
+    background: #229954;
+    border-color: #229954;
+    color: white;
+}
+
+.btn-info {
+    background: var(--uform-info);
+    border-color: var(--uform-info);
+    color: white;
+}
+
+.btn-info:hover {
+    background: #2980b9;
+    border-color: #2980b9;
+    color: white;
+}
+
+.btn-warning {
+    background: var(--uform-warning);
+    border-color: var(--uform-warning);
+    color: white;
+}
+
+.btn-warning:hover {
+    background: #e67e22;
+    border-color: #e67e22;
+    color: white;
+}
+
+.btn-error {
+    background: var(--uform-error);
+    border-color: var(--uform-error);
+    color: white;
+}
+
+.btn-error:hover {
+    background: #c0392b;
+    border-color: #c0392b;
+    color: white;
+}
+
+.btn-default {
+    background: var(--uform-bg);
+    border-color: var(--uform-border);
+    color: var(--uform-text-light);
+}
+
+.btn-default:hover {
+    background: var(--uform-bg-light);
+    border-color: var(--uform-text-light);
+    color: var(--uform-text);
+}
+
+.btn-small {
+    padding: 4px 8px;
+    font-size: 11px;
+}
+
+.btn-small i {
+    font-size: 10px;
+    margin-right: 4px;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.btn.copied {
+    background: var(--uform-success);
+    border-color: var(--uform-success);
+    color: white;
+}
+
+/* 模态框样式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    backdrop-filter: blur(2px);
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--uform-bg);
+    border-radius: var(--uform-radius);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    max-width: 90vw;
+    max-height: 90vh;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.large-modal .modal-content {
+    width: 900px;
+    height: 700px;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--uform-border);
+    background: var(--uform-bg-light);
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--uform-dark);
+}
+
+.modal-close {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    font-size: 20px;
+    color: var(--uform-text-muted);
+    cursor: pointer;
+    border-radius: var(--uform-radius-small);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--uform-transition);
+}
+
+.modal-close:hover {
+    background: var(--uform-border-light);
+    color: var(--uform-text);
+}
+
+.modal-body {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+.modal-footer {
+    padding: 15px 25px;
+    border-top: 1px solid var(--uform-border);
+    background: var(--uform-bg-light);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* 批量选项模态框 */
+.bulk-options-tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.bulk-tab {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid var(--uform-border);
+    background: var(--uform-bg);
+    color: var(--uform-text-light);
+    cursor: pointer;
+    transition: var(--uform-transition);
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.bulk-tab:first-child {
+    border-radius: var(--uform-radius-small) 0 0 var(--uform-radius-small);
+}
+
+.bulk-tab:last-child {
+    border-radius: 0 var(--uform-radius-small) var(--uform-radius-small) 0;
+}
+
+.bulk-tab.active,
+.bulk-tab:hover {
+    background: var(--uform-primary);
+    border-color: var(--uform-primary);
+    color: white;
+}
+
+.bulk-tab-content {
+    display: none;
+}
+
+.bulk-tab-content.active {
+    display: block;
+}
+
+#bulk-options-text {
+    width: 100%;
+    height: 200px;
+    padding: 12px;
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius-small);
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    resize: vertical;
+}
+
+.bulk-tips {
+    margin-top: 15px;
+    padding: 15px;
+    background: var(--uform-bg-light);
+    border-radius: var(--uform-radius-small);
+    font-size: 12px;
+}
+
+.bulk-tips p {
+    margin: 0 0 8px 0;
+    font-weight: 500;
+    color: var(--uform-text-light);
+}
+
+.bulk-tips ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.bulk-tips li {
+    margin-bottom: 4px;
+    color: var(--uform-text-muted);
+}
+
+.preset-categories {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.preset-btn {
+    padding: 10px 12px;
+    border: 1px solid var(--uform-border);
+    background: var(--uform-bg);
+    color: var(--uform-text-light);
+    border-radius: var(--uform-radius-small);
+    cursor: pointer;
+    transition: var(--uform-transition);
+    font-size: 12px;
+    text-align: center;
+}
+
+.preset-btn:hover {
+    background: var(--uform-primary);
+    border-color: var(--uform-primary);
+    color: white;
+}
+
+.preset-preview {
+    padding: 15px;
+    background: var(--uform-bg-dark);
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius-small);
+    min-height: 150px;
+    font-size: 12px;
+    color: var(--uform-text-muted);
+}
+
+.preset-option {
+    padding: 4px 8px;
+    margin: 2px;
+    background: var(--uform-bg);
+    border: 1px solid var(--uform-border);
+    border-radius: 3px;
+    display: inline-block;
+}
+
+/* 代码模态框 */
+.code-tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.code-tab {
+    padding: 8px 15px;
+    border: 1px solid var(--uform-border);
+    background: var(--uform-bg);
+    color: var(--uform-text-light);
+    cursor: pointer;
+    transition: var(--uform-transition);
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: var(--uform-radius-small) var(--uform-radius-small) 0 0;
+}
+
+.code-tab:hover,
+.code-tab.active {
+    background: var(--uform-primary);
+    border-color: var(--uform-primary);
+    color: white;
+}
+
+.code-content {
+    border: 1px solid var(--uform-border);
+    border-radius: 0 var(--uform-radius-small) var(--uform-radius-small) var(--uform-radius-small);
+    padding: 20px;
+    background: var(--uform-bg-dark);
+}
+
+.code-tab-content {
+    display: none;
+}
+
+.code-tab-content.active {
+    display: block;
+}
+
+.code-tab-content label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--uform-text-light);
+}
+
+.code-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.code-input-group input,
+.code-input-group textarea {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius-small);
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    background: var(--uform-bg);
+    color: var(--uform-text);
+}
+
+.code-input-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.code-input-group button {
+    padding: 10px 15px;
+    border: 1px solid var(--uform-primary);
+    background: var(--uform-primary);
+    color: white;
+    border-radius: var(--uform-radius-small);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: var(--uform-transition);
+    white-space: nowrap;
+}
+
+.code-input-group button:hover {
+    background: var(--uform-primary-dark);
+    border-color: var(--uform-primary-dark);
+}
+
+.code-example {
+    margin-top: 10px;
+    padding: 10px;
+    background: var(--uform-bg-light);
+    border-radius: var(--uform-radius-small);
+    font-size: 12px;
+}
+
+.code-example p {
+    margin: 0 0 8px 0;
+    color: var(--uform-text-light);
+}
+
+.code-example code {
+    display: block;
+    margin: 4px 0;
+    padding: 4px 8px;
+    background: var(--uform-bg);
+    border: 1px solid var(--uform-border);
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    color: var(--uform-primary);
+}
+
+.iframe-options {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--uform-border);
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.iframe-options label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--uform-text-light);
+    margin-bottom: 0 !important;
+}
+
+.iframe-options input {
+    width: 80px;
+    padding: 4px 6px;
+    border: 1px solid var(--uform-border);
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+.api-docs {
+    margin-top: 15px;
+    font-size: 12px;
+}
+
+.api-docs h5 {
+    margin: 0 0 10px 0;
+    color: var(--uform-text-light);
+    font-size: 13px;
+}
+
+.api-docs p {
+    margin: 5px 0;
+    color: var(--uform-text-muted);
+}
+
+.api-docs pre {
+    margin: 10px 0;
+    padding: 12px;
+    background: var(--uform-bg);
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius-small);
+    overflow-x: auto;
+}
+
+.api-docs code {
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    color: var(--uform-primary);
+}
+
+/* 预览模态框 */
+.preview-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.preview-device {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--uform-border);
+    background: var(--uform-bg);
+    color: var(--uform-text-muted);
+    border-radius: var(--uform-radius-small);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--uform-transition);
+}
+
+.preview-device:hover,
+.preview-device.active {
+    background: var(--uform-primary);
+    border-color: var(--uform-primary);
+    color: white;
+}
+
+.preview-container {
+    width: 100%;
+    height: 600px;
+    background: #f0f0f0;
+    border-radius: var(--uform-radius-small);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.preview-container.device-desktop #preview-iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.preview-container.device-tablet #preview-iframe {
+    width: 768px;
+    height: 100%;
+    max-width: 100%;
+}
+
+.preview-container.device-mobile #preview-iframe {
+    width: 375px;
+    height: 100%;
+    max-width: 100%;
+}
+
+#preview-iframe {
+    border: none;
+    border-radius: var(--uform-radius-small);
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* 响应式预览模式 */
+.canvas-content.preview-desktop {
+    max-width: none;
+}
+
+.canvas-content.preview-tablet {
+    max-width: 768px;
+    margin: 0 auto;
+}
+
+.canvas-content.preview-mobile {
+    max-width: 375px;
+    margin: 0 auto;
+}
+
+/* 拖拽相关样式 */
+.sortable-ghost {
+    opacity: 0.5;
+    background: rgba(55, 136, 216, 0.1);
+}
+
+.sortable-chosen {
+    background: rgba(55, 136, 216, 0.05);
+}
+
+.sortable-drag {
+    transform: rotate(5deg);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.canvas-field.sortable-ghost {
+    opacity: 0.3;
+    border: 2px dashed var(--uform-primary);
+    background: rgba(55, 136, 216, 0.05);
+}
+
+/* 主题预览 */
+.theme-preview {
+    margin-top: 10px;
+    height: 60px;
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius-small);
+    background: var(--uform-bg-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--uform-text-muted);
+    position: relative;
+    overflow: hidden;
+}
+
+.preview-box {
+    padding: 8px 12px;
+    background: var(--uform-bg);
+    border: 1px solid var(--uform-border);
+    border-radius: 3px;
+    font-size: 11px;
+}
+
+/* 动画效果 */
+.fade-in {
+    animation: fadeIn 0.3s ease;
+}
+
+.slide-up {
+    animation: slideUp 0.3s ease;
+}
+
+.slide-down {
+    animation: slideDown 0.3s ease;
+}
+
+.bounce-in {
+    animation: bounceIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 加载动画 */
+.loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--uform-border);
+    border-top: 2px solid var(--uform-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* 工具提示 */
+.tooltip {
+    position: absolute;
+    z-index: 9999;
+    padding: 6px 10px;
+    background: var(--uform-dark);
+    color: white;
+    font-size: 11px;
+    border-radius: var(--uform-radius-small);
+    white-space: nowrap;
+    opacity: 0;
+    animation: fadeIn 0.2s ease forwards;
+    pointer-events: none;
+}
+
+.tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: var(--uform-dark);
+}
+
+.tooltip.tooltip-bottom::after {
+    top: -8px;
+    border-top-color: transparent;
+    border-bottom-color: var(--uform-dark);
+}
+
+/* 错误和成功消息 */
+.message {
+    padding: 12px 15px;
+    margin: 15px 0;
+    border-radius: var(--uform-radius-small);
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.message.success {
+    background: rgba(39, 174, 96, 0.1);
+    color: var(--uform-success);
+    border-left: 4px solid var(--uform-success);
+}
+
+.message.error {
+    background: rgba(231, 76, 60, 0.1);
+    color: var(--uform-error);
+    border-left: 4px solid var(--uform-error);
+}
+
+.message.warning {
+    background: rgba(243, 156, 18, 0.1);
+    color: var(--uform-warning);
+    border-left: 4px solid var(--uform-warning);
+}
+
+.message.info {
+    background: rgba(52, 152, 219, 0.1);
+    color: var(--uform-info);
+    border-left: 4px solid var(--uform-info);
+}
+
+.message i {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+/* 嵌套容器样式 */
+.nested-container {
+    min-height: 100px;
+    border: 2px dashed var(--uform-border);
+    border-radius: var(--uform-radius);
+    background: rgba(55, 136, 216, 0.02);
+    position: relative;
+    padding: 20px;
+    margin: 10px 0;
+}
+
+.nested-container:hover {
+    border-color: var(--uform-primary);
+}
+
+.nested-container.drag-over {
+    border-color: var(--uform-primary);
+    background: rgba(55, 136, 216, 0.05);
+}
+
+.nested-container-header {
+    position: absolute;
+    top: -12px;
+    left: 10px;
+    background: var(--uform-bg);
+    padding: 4px 8px;
+    border-radius: var(--uform-radius-small);
+    font-size: 11px;
+    color: var(--uform-text-muted);
+    font-weight: 500;
+}
+
+.column-container {
+    display: flex;
+    gap: 15px;
+    margin: 10px 0;
+}
+
+.column {
+    flex: 1;
+    min-height: 100px;
+    border: 1px dashed var(--uform-border);
+    border-radius: var(--uform-radius);
+    padding: 15px;
+    background: var(--uform-bg);
+    position: relative;
+}
+
+.column:hover {
+    border-color: var(--uform-primary);
+}
+
+.column.drag-over {
+    border-color: var(--uform-primary);
+    background: rgba(55, 136, 216, 0.02);
+}
+
+.column-header {
+    position: absolute;
+    top: -8px;
+    left: 10px;
+    background: var(--uform-bg);
+    padding: 2px 6px;
+    font-size: 10px;
+    color: var(--uform-text-muted);
+}
+
+/* 重复器样式 */
+.repeater-container {
+    border: 1px solid var(--uform-border);
+    border-radius: var(--uform-radius);
+    background: var(--uform-bg);
+    margin: 10px 0;
+}
+
+.repeater-header {
+    padding: 12px 15px;
+    background: var(--uform-bg-light);
+    border-bottom: 1px solid var(--uform-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.repeater-title {
+    font-weight: 500;
+    color: var(--uform-text);
+}
+
+.repeater-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.repeater-add,
+.repeater-remove {
+    width: 24px;
+    height: 24px;
+    border: none;
+    border-radius: var(--uform-radius-small);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: var(--uform-transition);
+}
+
+.repeater-add {
+    background: var(--uform-success);
+    color: white;
+}
+
+.repeater-add:hover {
+    background: #229954;
+}
+
+.repeater-remove {
+    background: var(--uform-error);
+    color: white;
+}
+
+.repeater-remove:hover {
+    background: #c0392b;
+}
+
+.repeater-body {
+    padding: 15px;
+    min-height: 100px;
+    border: 1px dashed var(--uform-border);
+    border-radius: var(--uform-radius-small);
+    margin: 10px;
+}
+
+.repeater-body:hover {
+    border-color: var(--uform-primary);
+}
+
+.repeater-body.drag-over {
+    border-color: var(--uform-primary);
+    background: rgba(55, 136, 216, 0.02);
+}
+
+.repeater-item {
+    padding: 10px;
+    border: 1px solid var(--uform-border-light);
+    border-radius: var(--uform-radius-small);
+    margin-bottom: 10px;
+    background: var(--uform-bg-light);
+    position: relative;
+}
+
+.repeater-item:last-child {
+    margin-bottom: 0;
+}
+
+.repeater-item-header {
+    display: flex;
+    justify-content: between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--uform-border-light);
+}
+
+.repeater-item-title {
+    font-size: 12px;
+    color: var(--uform-text-light);
+    font-weight: 500;
+}
+
+.repeater-item-remove {
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: var(--uform-error);
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: auto;
+}
+
+/* 响应式设计增强 */
+@media (max-width: 1400px) {
+    .form-builder {
+        height: auto;
+        min-height: 600px;
+    }
+    
+    .fields-panel {
+        width: 260px;
+        min-width: 260px;
+    }
+    
+    .properties-panel {
+        width: 300px;
+        min-width: 300px;
+    }
+    
+    .field-category h4 {
+        padding: 10px 12px;
+    }
+    
+    .field-items {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .uforms-creator {
+        height: auto;
+        min-height: 600px;
+    }
+    
+    .form-builder {
+        flex-direction: column;
+    }
+    
+    .fields-panel {
+        width: 100%;
+        min-width: auto;
+        max-height: 250px;
+        border-right: none;
+        border-bottom: 1px solid var(--uform-border);
+    }
+    
+    .fields-panel-content {
+        padding: 10px;
+    }
+    
+    .field-category {
+        margin-bottom: 15px;
+    }
+    
+    .field-category h4 {
+        padding: 8px 12px;
+    }
+    
+    .field-items {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 6px;
+        padding: 8px;
+        max-height: 200px;
+    }
+    
+    .field-item {
+        padding: 8px 10px;
+    }
+    
+    .form-canvas {
+        min-height: 400px;
+        border-left: none;
+        border-right: none;
+    }
+    
+    .properties-panel {
+        width: 100%;
+        min-width: auto;
+        max-height: 350px;
+        border-left: none;
+        border-top: 1px solid var(--uform-border);
+    }
+    
+    .panel-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .tab-button {
+        flex: 1;
+        min-width: 80px;
+    }
+    
+    .column-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .uforms-creator {
+        height: auto;
+        min-height: 500px;
+    }
+    
+    .canvas-toolbar {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 10px 15px;
+    }
+    
+    .toolbar-left,
+    .toolbar-center,
+    .toolbar-right {
+        gap: 6px;
+    }
+    
+    .preview-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    .canvas-toolbar button {
+        padding: 6px 10px;
+        font-size: 11px;
+    }
+    
+    .canvas-content {
+        padding: 15px;
+    }
+    
+    .canvas-field {
+        margin-bottom: 12px;
+    }
+    
+    .field-header {
+        padding: 10px 12px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .field-meta {
+        order: 3;
+        margin-right: 0;
+    }
+    
+    .field-actions {
+        order: 2;
+        opacity: 1;
+    }
+    
+    .field-body {
+        padding: 12px;
+    }
+    
+    .property-group {
+        padding: 15px;
+    }
+    
+    .form-actions {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 12px 15px;
+    }
+    
+    .actions-left,
+    .actions-center,
+    .actions-right {
+        flex: 1;
+        min-width: 200px;
+    }
+    
+    .actions-center {
+        order: 3;
+        justify-content: flex-start;
+    }
+    
+    /* 模态框响应式 */
+    .modal-content {
+        width: 95vw;
+        max-width: 95vw;
+        max-height: 95vh;
+        margin: 2.5vh auto;
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+    }
+    
+    .large-modal .modal-content {
+        width: 95vw;
+        height: 95vh;
+    }
+    
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: 15px 20px;
+    }
+    
+    .code-input-group {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .iframe-options {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    
+    .preset-categories {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+    
+    .color-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .fields-panel h3 {
+        padding: 15px;
+        font-size: 14px;
+    }
+    
+    .field-items {
+        grid-template-columns: 1fr;
+    }
+    
+    .field-item {
+        padding: 10px;
+    }
+    
+    .canvas-content {
+        padding: 10px;
+    }
+    
+    .canvas-drop-zone {
+        min-height: 300px;
+        padding: 20px;
+    }
+    
+    .drop-hint h3 {
+        font-size: 16px;
+    }
+    
+    .drop-hint p {
+        font-size: 13px;
+    }
+    
+    .property-group h4 {
+        font-size: 12px;
+    }
+    
+    .property-item label {
+        font-size: 11px;
+    }
+    
+    .property-item input,
+    .property-item textarea,
+    .property-item select {
+        font-size: 12px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .actions-left,
+    .actions-center,
+    .actions-right {
+        justify-content: center;
+        min-width: auto;
+    }
+    
+    .btn {
+        justify-content: center;
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    :root {
+        --uform-border: #000000;
+        --uform-text: #000000;
+        --uform-bg: #ffffff;
+        --uform-primary: #0000ff;
+    }
+    
+    .canvas-field,
+    .field-item,
+    .property-item input,
+    .property-item textarea,
+    .property-item select {
+        border-width: 2px;
+    }
+    
+    .btn {
+        border-width: 2px;
+        font-weight: 600;
+    }
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --uform-bg: #1e1e1e;
+        --uform-bg-light: #2d2d2d;
+        --uform-bg-dark: #252525;
+        --uform-text: #ffffff;
+        --uform-text-light: #cccccc;
+        --uform-text-muted: #999999;
+        --uform-border: #404040;
+        --uform-border-light: #353535;
+        --uform-dark: #ffffff;
+    }
+    
+    .modal {
+        background: rgba(0, 0, 0, 0.8);
+    }
+    
+    .tooltip {
+        background: var(--uform-bg-light);
+        color: var(--uform-text);
+        border: 1px solid var(--uform-border);
+    }
+    
+    .tooltip::after {
+        border-top-color: var(--uform-bg-light);
+    }
+    
+    .tooltip.tooltip-bottom::after {
+        border-bottom-color: var(--uform-bg-light);
+        border-top-color: transparent;
+    }
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .field-added,
+    .field-removing,
+    .fade-in,
+    .slide-up,
+    .slide-down,
+    .bounce-in {
+        animation: none !important;
+    }
+}
+
+/* 打印样式 */
+@media print {
+    .uforms-creator {
+        display: none;
+    }
+}
+
+/* 自定义滚动条 */
+.fields-panel-content::-webkit-scrollbar,
+.canvas-content::-webkit-scrollbar,
+.tab-content::-webkit-scrollbar,
+.modal-body::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.fields-panel-content::-webkit-scrollbar-track,
+.canvas-content::-webkit-scrollbar-track,
+.tab-content::-webkit-scrollbar-track,
+.modal-body::-webkit-scrollbar-track {
+    background: var(--uform-bg-light);
+    border-radius: 3px;
+}
+
+.fields-panel-content::-webkit-scrollbar-thumb,
+.canvas-content::-webkit-scrollbar-thumb,
+.tab-content::-webkit-scrollbar-thumb,
+.modal-body::-webkit-scrollbar-thumb {
+    background: var(--uform-border);
+    border-radius: 3px;
+}
+
+.fields-panel-content::-webkit-scrollbar-thumb:hover,
+.canvas-content::-webkit-scrollbar-thumb:hover,
+.tab-content::-webkit-scrollbar-thumb:hover,
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--uform-text-muted);
+}
+
+/* 焦点管理 */
+.keyboard-navigation *:focus {
+    outline: 2px solid var(--uform-primary);
+    outline-offset: 2px;
+}
+
+/* 辅助功能 */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* 字段特定样式 */
+.field-body .uform-heading {
+    margin: 0;
+    padding: 0;
+    font-weight: 600;
+}
+
+.field-body .uform-paragraph {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.field-body .uform-divider {
+    margin: 10px 0;
+    border: none;
+    height: 1px;
+    background: var(--uform-border);
+}
+
+/* 状态指示器 */
+.field-status {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: var(--uform-transition);
+}
+
+.canvas-field:hover .field-status {
+    opacity: 1;
+}
+
+.field-status.valid {
+    background: var(--uform-success);
+}
+
+.field-status.invalid {
+    background: var(--uform-error);
+}
+
+.field-status.warning {
+    background: var(--uform-warning);
+}
+
+/* 拖放区域样式增强 */
+.canvas-drop-zone.dragover {
+    border-color: var(--uform-primary);
+    background: rgba(55, 136, 216, 0.05);
+    border-style: solid;
+}
+
+.canvas-drop-zone.dragover .drop-hint {
+    color: var(--uform-primary);
+}
+
+.canvas-drop-zone.dragover .drop-icon {
+    color: var(--uform-primary);
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+/* 实时样式预览系统 */
+.style-preview-enabled .canvas-field {
+    transition: var(--uform-transition);
+}
+
+.style-preview-enabled .field-body input,
+.style-preview-enabled .field-body textarea,
+.style-preview-enabled .field-body select {
+    border-radius: var(--preview-input-border-radius);
+    border-width: var(--preview-input-border-width);
+    height: var(--preview-input-height);
+    background-color: var(--preview-bg-color);
+    color: var(--preview-text-color);
+    border-color: var(--preview-border-color);
+}
+
+.style-preview-enabled .canvas-field {
+    margin-bottom: var(--preview-field-spacing);
+    background-color: var(--preview-bg-color);
+}
+
+.style-preview-enabled .canvas-field.selected {
+    border-color: var(--preview-primary-color);
+}
+
+.style-preview-enabled .field-required {
+    background-color: var(--preview-error-color);
+}
+
+.style-preview-enabled .btn-primary {
+    background-color: var(--preview-primary-color);
+    border-color: var(--preview-primary-color);
+}
+
+/* 主题切换样式 */
+.canvas-content.theme-default {
+    --theme-primary: #3788d8;
+    --theme-bg: #ffffff;
+    --theme-border: #dddddd;
+}
+
+.canvas-content.theme-minimal {
+    --theme-primary: #333333;
+    --theme-bg: #ffffff;
+    --theme-border: #eeeeee;
+}
+
+.canvas-content.theme-modern {
+    --theme-primary: #6c5ce7;
+    --theme-bg: #ffffff;
+    --theme-border: #ddd6fe;
+}
+
+.canvas-content.theme-classic {
+    --theme-primary: #2c3e50;
+    --theme-bg: #ffffff;
+    --theme-border: #bdc3c7;
+}
+
+.canvas-content.theme-bootstrap {
+    --theme-primary: #007bff;
+    --theme-bg: #ffffff;
+    --theme-border: #ced4da;
+}
+
+.canvas-content.theme-material {
+    --theme-primary: #2196F3;
+    --theme-bg: #ffffff;
+    --theme-border: #e0e0e0;
+}
+
+/* 字段分类滑动功能JavaScript触发的样式 */
+.field-category.slide-in .field-items {
+    animation: slideIn 0.3s ease-out;
+}
+
+.field-category.slide-out .field-items {
+    animation: slideOut 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    0% {
+        max-height: 0;
+        opacity: 0;
+    }
+    100% {
+        max-height: 400px;
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    0% {
+        max-height: 400px;
+        opacity: 1;
+    }
+    100% {
+        max-height: 0;
+        opacity: 0;
+    }
+}

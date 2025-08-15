@@ -1,0 +1,329 @@
+/* Uforms 通知页面样式 */
+
+/* 引入Fomantic UI */
+@import url('../../lib/fomantic-ui/dist/semantic.min.css');
+
+/* 基础变量定义 */
+:root {
+    --uform-primary: #3788d8;
+    --uform-success: #27ae60;
+    --uform-warning: #f39c12;
+    --uform-error: #e74c3c;
+    --uform-info: #3498db;
+    --uform-light: #ecf0f1;
+    --uform-dark: #2c3e50;
+    --uform-border: #e0e0e0;
+    --uform-text: #333;
+    --uform-text-light: #666;
+    --uform-text-muted: #999;
+    --uform-bg: #ffffff;
+    --uform-bg-light: #f8f9fa;
+    --uform-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    --uform-radius: 6px;
+    --uform-spacing: 15px;
+}
+
+/* 主容器 */
+.notifications-container {
+    padding: 20px;
+    background: var(--uform-bg-light);
+}
+
+/* 顶部导航 - 全宽 */
+.uforms-header {
+    background: #fff;
+    border-bottom: 1px solid var(--uform-border);
+    padding: 0 20px;
+    width: 100%;
+}
+
+.uforms-header h1 {
+    margin: 0;
+    padding: 20px 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--uform-dark);
+}
+
+/* 导航菜单 */
+.uforms-nav {
+    display: flex;
+    margin: 0 -20px;
+    background: #fafafa;
+    border-top: 1px solid var(--uform-border);
+    width: calc(100% + 40px);
+}
+
+.uforms-nav a {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    color: var(--uform-text-muted);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.uforms-nav a:hover {
+    color: var(--uform-text);
+    background: #f0f0f0;
+}
+
+.uforms-nav a.active {
+    color: var(--uform-text);
+    background: #fff;
+    border-bottom-color: #999;
+}
+
+.uforms-nav a i {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+/* 通知统计 */
+.notifications-stats {
+    display: flex;
+    margin-bottom: 30px;
+    gap: var(--uform-spacing);
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: var(--uform-bg);
+    border-radius: var(--uform-radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: var(--uform-shadow);
+    border: 1px solid var(--uform-border);
+    min-width: 200px;
+    flex: 1;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--uform-primary);
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--uform-text-light);
+}
+
+/* 通知操作栏 */
+.notifications-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+    background: var(--uform-bg);
+    padding: 20px;
+    border-radius: var(--uform-radius);
+    box-shadow: var(--uform-shadow);
+    border: 1px solid var(--uform-border);
+}
+
+.toolbar-left,
+.toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* 通知列表 */
+.notifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.notification-item {
+    background: var(--uform-bg);
+    border-radius: var(--uform-radius);
+    padding: 20px;
+    display: flex;
+    gap: 15px;
+    box-shadow: var(--uform-shadow);
+    border: 1px solid var(--uform-border);
+    transition: all 0.3s ease;
+}
+
+.notification-item:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.notification-item.unread {
+    border-left: 4px solid var(--uform-primary);
+    background: rgba(55, 136, 216, 0.03);
+}
+
+.notification-checkbox {
+    display: flex;
+    align-items: flex-start;
+    padding-top: 3px;
+}
+
+.notification-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    background: rgba(55, 136, 216, 0.1);
+    color: var(--uform-primary);
+    flex-shrink: 0;
+    margin-top: 3px;
+}
+
+.notification-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.notification-header {
+    margin-bottom: 10px;
+}
+
+.notification-title {
+    margin: 0 0 8px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--uform-dark);
+}
+
+.notification-meta {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--uform-text-light);
+}
+
+.notification-form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.notification-body p {
+    margin: 0 0 15px 0;
+    color: var(--uform-text);
+    line-height: 1.5;
+}
+
+.notification-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.notification-actions .ui.icon.button {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.notification-actions .ui.icon.button:hover {
+    transform: scale(1.1);
+}
+
+.action-read {
+    color: var(--uform-success);
+    background: #e8f4e8;
+}
+
+.action-unread {
+    color: var(--uform-warning);
+    background: #fff3e0;
+}
+
+.action-view {
+    color: var(--uform-primary);
+    background: #e3f2fd;
+}
+
+.action-info {
+    color: var(--uform-info);
+    background: #f5e8fc;
+}
+
+.action-delete {
+    color: var(--uform-error);
+    background: #fce8e8;
+}
+
+/* 空状态 */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--uform-text-light);
+    background: var(--uform-bg);
+    border-radius: var(--uform-radius);
+    box-shadow: var(--uform-shadow);
+    border: 1px solid var(--uform-border);
+}
+
+.empty-state i.icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: var(--uform-border);
+}
+
+/* 批量操作 */
+.bulk-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--uform-bg);
+    padding: 20px;
+    border-radius: var(--uform-radius);
+    box-shadow: var(--uform-shadow);
+    border: 1px solid var(--uform-border);
+    flex-wrap: wrap;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .notifications-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .toolbar-left,
+    .toolbar-right {
+        justify-content: center;
+    }
+    
+    .notification-item {
+        flex-direction: column;
+    }
+    
+    .notification-content {
+        order: 2;
+    }
+    
+    .notification-actions {
+        justify-content: flex-start;
+    }
+}
