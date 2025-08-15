@@ -1,6 +1,12 @@
 # Typecho-Uforms
 Typecho第一款表单生成系统，正在完善功能，欢迎提交issue，更欢迎一起完善！
 
+fork提醒：lib库缺少fomantic-ui、fullcalendar可以在下面进行下载
+
+https://sourceforge.net/projects/fomantic-ui.mirror/
+
+https://github.com/fullcalendar/fullcalendar/releases/download/v6.1.19/fullcalendar-6.1.19.zip
+
 ## 功能介绍
 
 定位：Typecho 通用表单 / 预约系统 + 数据采集
