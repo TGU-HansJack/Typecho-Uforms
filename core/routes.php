@@ -1,9 +1,6 @@
 <?php
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 
-require_once 'UformsHelper.php';
-require_once 'front.php';
-
 // 处理表单相关路由
 class UformsRouter {
     

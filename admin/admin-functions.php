@@ -3,6 +3,13 @@ if (!defined('__TYPECHO_ADMIN__')) {
     exit;
 }
 
+// 安全的URL编码函数
+if (!function_exists('safe_urlencode')) {
+    function safe_urlencode($string) {
+        return urlencode((string)($string ?? ''));
+    }
+}
+
 $db = Typecho_Db::get();
 $options = Helper::options();
 $request = Typecho_Request::getInstance();

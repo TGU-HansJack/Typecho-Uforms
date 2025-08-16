@@ -177,7 +177,7 @@
                 },
                 events: function(fetchInfo, successCallback, failureCallback) {
                     // 加载事件数据
-                    fetch('<?php echo Helper::options()->adminUrl; ?>extending.php?panel=Uforms%2Fajax.php?' +
+                    fetch('<?php echo Helper::options()->adminUrl; ?>extending.php?panel=<?php echo safe_urlencode('Uforms/ajax.php'); ?>?' +
                           'action=get_calendar_events&form_id=<?php echo $form_id; ?>&' +
                           'start=' + fetchInfo.start.toISOString() + 
                           '&end=' + fetchInfo.end.toISOString())

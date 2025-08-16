@@ -121,7 +121,7 @@
     <?php if (!empty($settings['enable_analytics'])): ?>
     <script>
         // 表单访问统计
-        fetch('<?php echo Helper::options()->adminUrl; ?>extending.php?panel=Uforms%2Fajax.php', {
+        fetch('<?php echo Helper::options()->adminUrl; ?>extending.php?panel=<?php echo safe_urlencode('Uforms/ajax.php'); ?>', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

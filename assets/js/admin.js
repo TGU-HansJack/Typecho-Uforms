@@ -37,6 +37,9 @@
             
             // 工具提示
             $('[data-tooltip]').each(this.initTooltip);
+            
+            // 移除原来的获取代码按钮事件处理，使用页面中的处理方式
+            // $(document).on('click', '.action-code', this.handleGetCode.bind(this));
         },
         
         initComponents: function() {

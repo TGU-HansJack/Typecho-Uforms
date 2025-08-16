@@ -45,14 +45,19 @@
             const formData = new FormData(form);
             const submitButton = form.querySelector('.uform-submit');
             
+            console.log('Uforms: Form submission started');
+            
             // 验证表单
             if (!this.validateForm(form)) {
+                console.log('Uforms: Form validation failed');
                 return;
             }
             
             // 显示加载状态
             this.setLoadingState(form, true);
             submitButton.disabled = true;
+            
+            console.log('Uforms: Sending request to: ' + window.location.href);
             
             fetch(window.location.href, {
                 method: 'POST',
@@ -61,24 +66,71 @@
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log('Uforms: Response received', response);
+                console.log('Uforms: Response status:', response.status);
+                console.log('Uforms: Response headers:', [...response.headers.entries()]);
+                
+                // 检查响应类型
+                const contentType = response.headers.get('content-type');
+                console.log('Uforms: Content type:', contentType);
+                
+                if (contentType && contentType.indexOf('application/json') !== -1) {
+                    console.log('Uforms: Parsing JSON response');
+                    return response.json();
+                } else {
+                    // 如果不是JSON响应，尝试解析为文本
+                    console.log('Uforms: Parsing text response');
+                    return response.text().then(text => {
+                        console.log('Uforms: Text response:', text);
+                        
+                        // 如果响应包含成功类
+                        if (text.indexOf('uform-success') !== -1 || 
+                            text.indexOf('class="uform-success"') !== -1) {
+                            return {success: true, message: '提交成功'};
+                        } 
+                        // 如果响应包含错误类
+                        else if (text.indexOf('uform-error') !== -1 || 
+                                 text.indexOf('class="uform-errors"') !== -1) {
+                            // 尝试提取错误信息
+                            const errorMatch = text.match(/<div[^>]*class="uform-[^"]*"[^>]*>(.*?)<\/div>/);
+                            const errorMessage = errorMatch ? errorMatch[1] : '提交失败';
+                            return {success: false, message: errorMessage};
+                        } 
+                        // 未知响应，尝试重新加载页面
+                        else {
+                            window.location.reload();
+                            return {success: true, message: '提交成功'};
+                        }
+                    });
+                }
+            })
             .then(data => {
+                console.log('Uforms: Processed data:', data);
+                
                 if (data.success) {
                     this.showSuccess(form, data.message);
                     if (data.redirect) {
                         setTimeout(() => {
                             window.location.href = data.redirect;
                         }, 2000);
+                    } else if (data.redirect === "") {
+                        // 如果重定向URL为空字符串，则重新加载页面
+                        window.location.reload();
                     } else {
-                        form.reset();
-                        this.updateProgress();
+                        // 只有在成功时才重置表单
+                        // 延迟重置表单，让用户看到成功消息
+                        setTimeout(() => {
+                            form.reset();
+                            this.updateProgress();
+                        }, 3000);
                     }
                 } else {
-                    this.showErrors(form, data.errors || [data.message]);
+                    this.showErrors(form, [data.message]);
                 }
             })
             .catch(error => {
-                console.error('Form submission error:', error);
+                console.error('Uforms: Form submission error:', error);
                 this.showErrors(form, ['提交失败，请重试']);
             })
             .finally(() => {
@@ -180,45 +232,43 @@
         },
         
         showSuccess: function(form, message) {
-            this.clearMessages(form);
+            const successContainer = document.createElement('div');
+            successContainer.className = 'uform-success';
+            successContainer.textContent = message;
             
-            const successElement = document.createElement('div');
-            successElement.className = 'uform-success';
-            successElement.textContent = message;
+            // 移除已存在的成功信息
+            const existingSuccess = form.parentNode.querySelector('.uform-success');
+            if (existingSuccess) {
+                existingSuccess.remove();
+            }
             
-            form.parentNode.insertBefore(successElement, form);
+            // 移除错误信息
+            const existingErrors = form.parentNode.querySelector('.uform-errors');
+            if (existingErrors) {
+                existingErrors.remove();
+            }
             
-            // 滚动到成功消息
-            successElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            form.parentNode.insertBefore(successContainer, form);
+            
+            // 滚动到成功信息位置
+            successContainer.scrollIntoView({behavior: 'smooth', block: 'center'});
         },
         
         showErrors: function(form, errors) {
-            this.clearMessages(form);
-            
-            if (!Array.isArray(errors)) {
-                errors = [errors];
-            }
-            
             const errorContainer = document.createElement('div');
             errorContainer.className = 'uform-errors';
+            errorContainer.innerHTML = '<ul><li>' + errors.join('</li><li>') + '</li></ul>';
             
-            const errorList = document.createElement('ul');
-            errors.forEach(error => {
-                const errorItem = document.createElement('li');
-                errorItem.textContent = error;
-                errorList.appendChild(errorItem);
-            });
+            // 移除已存在的错误信息
+            const existingErrors = form.parentNode.querySelector('.uform-errors');
+            if (existingErrors) {
+                existingErrors.remove();
+            }
             
-            errorContainer.appendChild(errorList);
             form.parentNode.insertBefore(errorContainer, form);
             
-            // 滚动到错误消息
-            errorContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        },
-        
-        clearMessages: function(form) {
-            const messages = form.parentNode.querySelectorAll('.uform-success, .uform-errors');
-            messages.forEach(message => message.remove());
+            // 滚动到错误信息位置
+            errorContainer.scrollIntoView({behavior: 'smooth', block: 'center'});
         },
         
         setLoadingState: function(form, isLoading) {
@@ -231,84 +281,55 @@
         },
         
         initProgress: function() {
-            const form = document.querySelector('.uform-' + this.formName);
-            const progressBar = form && form.querySelector('.progress-bar');
-            
+            const progressBar = document.querySelector('.form-progress');
             if (progressBar) {
                 this.updateProgress();
             }
         },
         
         updateProgress: function() {
-            const form = document.querySelector('.uform-' + this.formName + ' .uform-form');
-            const progressBar = form && form.querySelector('.progress-bar');
+            const form = document.querySelector('.uform-form');
+            if (!form) return;
             
-            if (!progressBar) return;
+            const inputs = form.querySelectorAll('input, textarea, select');
+            const total = inputs.length;
+            let filled = 0;
             
-            const fields = form.querySelectorAll('input, textarea, select');
-            const requiredFields = Array.from(fields).filter(field => field.hasAttribute('required'));
-            
-            if (requiredFields.length === 0) return;
-            
-            const completedFields = requiredFields.filter(field => {
-                if (field.type === 'checkbox' || field.type === 'radio') {
-                    return form.querySelector(`input[name="${field.name}"]:checked`);
+            inputs.forEach(input => {
+                if (input.value && input.type !== 'submit' && input.type !== 'button') {
+                    filled++;
                 }
-                return field.value.trim() !== '';
             });
             
-            const progress = (completedFields.length / requiredFields.length) * 100;
-            progressBar.style.width = progress + '%';
+            const percentage = total > 0 ? Math.round((filled / total) * 100) : 0;
+            
+            const progressBar = document.querySelector('.form-progress-bar');
+            if (progressBar) {
+                progressBar.style.width = percentage + '%';
+                progressBar.textContent = percentage + '%';
+            }
         },
         
         handleFilePreview: function(e) {
-            const input = e.target;
-            const fieldContainer = input.closest('.uform-field');
+            const fileInput = e.target;
+            const file = fileInput.files[0];
+            if (!file) return;
             
-            // 清除旧的预览
-            const oldPreview = fieldContainer.querySelector('.file-preview');
-            if (oldPreview) {
-                oldPreview.remove();
-            }
+            const previewContainer = fileInput.parentNode.querySelector('.file-preview');
+            if (!previewContainer) return;
             
-            if (!input.files || input.files.length === 0) return;
-            
-            const previewContainer = document.createElement('div');
-            previewContainer.className = 'file-preview';
-            
-            Array.from(input.files).forEach(file => {
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
-                
-                const fileName = document.createElement('span');
-                fileName.className = 'file-name';
-                fileName.textContent = file.name;
-                
-                const fileSize = document.createElement('span');
-                fileSize.className = 'file-size';
-                fileSize.textContent = this.formatFileSize(file.size);
-                
-                fileItem.appendChild(fileName);
-                fileItem.appendChild(fileSize);
-                
-                // 图片预览
-                if (file.type.startsWith('image/')) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.className = 'file-thumbnail';
-                        img.style.maxWidth = '100px';
-                        img.style.maxHeight = '100px';
-                        fileItem.insertBefore(img, fileName);
-                    };
-                    reader.readAsDataURL(file);
-                }
-                
-                previewContainer.appendChild(fileItem);
-            });
-            
-            fieldContainer.appendChild(previewContainer);
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.createElement('div');
+                preview.className = 'file-preview-item';
+                preview.innerHTML = `
+                    <img src="${e.target.result}" alt="预览">
+                    <span class="file-name">${file.name}</span>
+                `;
+                previewContainer.innerHTML = '';
+                previewContainer.appendChild(preview);
+            };
+            reader.readAsDataURL(file);
         },
         
         updateRangeOutput: function(e) {

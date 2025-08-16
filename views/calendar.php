@@ -348,7 +348,7 @@ $(document).ready(function() {
     
     function loadCalendarEvents(formId) {
         $.ajax({
-            url: '<?php echo Helper::options()->adminUrl; ?>extending.php?panel=Uforms%2Fajax.php',
+            url: '<?php echo Helper::options()->adminUrl; ?>extending.php?panel=<?php echo safe_urlencode('Uforms/ajax.php'); ?>',
             method: 'GET',
             data: {
                 action: 'get_calendar_events',
@@ -448,7 +448,7 @@ $(document).ready(function() {
     
     function saveCalendarEvent(eventData) {
         $.ajax({
-            url: '<?php echo Helper::options()->adminUrl; ?>extending.php?panel=Uforms%2Fajax.php',
+            url: '<?php echo Helper::options()->adminUrl; ?>extending.php?panel=<?php echo safe_urlencode('Uforms/ajax.php'); ?>',
             method: 'POST',
             data: {
                 action: 'save_calendar_event',
@@ -500,7 +500,7 @@ $(document).ready(function() {
         const start = calendar.view.activeStart.toISOString().split('T')[0];
         const end = calendar.view.activeEnd.toISOString().split('T')[0];
         
-        let url = '<?php echo Helper::options()->adminUrl; ?>extending.php?panel=Uforms%2Fexport.php';
+        let url = '<?php echo Helper::options()->adminUrl; ?>extending.php?panel=<?php echo safe_urlencode('Uforms/export.php'); ?>';
         url += '?type=calendar';
         url += '&start=' + start;
         url += '&end=' + end;
@@ -518,7 +518,7 @@ $(document).ready(function() {
         
         if (confirm('确定要删除这个事件吗？')) {
             $.ajax({
-                url: '<?php echo Helper::options()->adminUrl; ?>extending.php?panel=Uforms%2Fajax.php',
+                url: '<?php echo Helper::options()->adminUrl; ?>extending.php?panel=<?php echo safe_urlencode('Uforms/ajax.php'); ?>',
                 method: 'POST',
                 data: {
                     action: 'delete_calendar_event',

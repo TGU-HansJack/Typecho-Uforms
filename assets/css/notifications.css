@@ -84,10 +84,10 @@
 
 /* 通知统计 */
 .notifications-stats {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
     margin-bottom: 30px;
-    gap: var(--uform-spacing);
-    flex-wrap: wrap;
 }
 
 .stat-card {
@@ -99,8 +99,6 @@
     align-items: center;
     box-shadow: var(--uform-shadow);
     border: 1px solid var(--uform-border);
-    min-width: 200px;
-    flex: 1;
     transition: all 0.3s ease;
 }
 
@@ -142,6 +140,16 @@
     align-items: center;
     gap: 15px;
     flex-wrap: wrap;
+}
+
+.toolbar-left a.ui.button {
+    box-shadow: 0 0 0 1px var(--uform-border) inset;
+}
+
+.toolbar-left a.ui.button.active {
+    background: var(--uform-primary);
+    color: white;
+    border-color: var(--uform-primary);
 }
 
 /* 通知列表 */
@@ -211,9 +219,14 @@
 .notification-meta {
     display: flex;
     gap: 15px;
-    flex-wrap: wrap;
-    font-size: 12px;
-    color: var(--uform-text-light);
+    font-size: 13px;
+    color: var(--uform-text-muted);
+}
+
+.notification-time {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .notification-form {
@@ -222,66 +235,42 @@
     gap: 5px;
 }
 
+.notification-body {
+    margin-bottom: 15px;
+}
+
 .notification-body p {
-    margin: 0 0 15px 0;
-    color: var(--uform-text);
+    margin: 0;
+    color: var(--uform-text-light);
     line-height: 1.5;
 }
 
 .notification-actions {
     display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .notification-actions .ui.icon.button {
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
+    box-shadow: 0 0 0 1px var(--uform-border) inset;
 }
 
-.notification-actions .ui.icon.button:hover {
-    transform: scale(1.1);
+.notification-actions .ui.icon.button.action-read:hover {
+    background: var(--uform-success);
+    color: white;
+    border-color: var(--uform-success);
 }
 
-.action-read {
-    color: var(--uform-success);
-    background: #e8f4e8;
-}
-
-.action-unread {
-    color: var(--uform-warning);
-    background: #fff3e0;
-}
-
-.action-view {
-    color: var(--uform-primary);
-    background: #e3f2fd;
-}
-
-.action-info {
-    color: var(--uform-info);
-    background: #f5e8fc;
-}
-
-.action-delete {
-    color: var(--uform-error);
-    background: #fce8e8;
+.notification-actions .ui.icon.button.action-unread:hover {
+    background: var(--uform-warning);
+    color: white;
+    border-color: var(--uform-warning);
 }
 
 /* 空状态 */
 .empty-state {
     text-align: center;
     padding: 60px 20px;
-    color: var(--uform-text-light);
-    background: var(--uform-bg);
-    border-radius: var(--uform-radius);
-    box-shadow: var(--uform-shadow);
-    border: 1px solid var(--uform-border);
+    color: var(--uform-text-muted);
 }
 
 .empty-state i.icon {
@@ -290,20 +279,25 @@
     color: var(--uform-border);
 }
 
+.empty-state p {
+    margin: 0;
+    font-size: 16px;
+}
+
 /* 批量操作 */
 .bulk-actions {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: var(--uform-bg);
-    padding: 20px;
-    border-radius: var(--uform-radius);
-    box-shadow: var(--uform-shadow);
-    border: 1px solid var(--uform-border);
-    flex-wrap: wrap;
 }
 
-/* 响应式设计 */
+/* 表单样式 */
+#notifications-form select,
+#notifications-form button {
+    box-shadow: 0 0 0 1px var(--uform-border) inset;
+}
+
+/* 响应式 */
 @media (max-width: 768px) {
     .notifications-toolbar {
         flex-direction: column;
@@ -319,11 +313,15 @@
         flex-direction: column;
     }
     
-    .notification-content {
-        order: 2;
+    .notification-icon {
+        align-self: flex-start;
     }
     
     .notification-actions {
-        justify-content: flex-start;
+        align-self: flex-end;
+    }
+    
+    .notifications-stats {
+        grid-template-columns: 1fr;
     }
 }

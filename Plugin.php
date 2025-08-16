@@ -10,8 +10,6 @@
 
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 
-
-
 class Uforms_Plugin implements Typecho_Plugin_Interface
 {
      /**
@@ -536,7 +534,7 @@ public static function adminHeader()
         $options = Helper::options();
         $pluginUrl = $options->pluginUrl . '/Uforms';
         echo '<link rel="stylesheet" href="' . $pluginUrl . '/assets/css/admin.css">';
-        echo '<script>var uformsAjaxUrl = "' . Helper::options()->adminUrl . 'extending.php?panel=Uforms%2Fajax.php";</script>';
+        echo '<script>var uformsAjaxUrl = "' . Helper::options()->adminUrl . 'extending.php?panel=' . safe_urlencode('Uforms/ajax.php') . '";</script>';
     }
 }
  */
@@ -593,13 +591,13 @@ public static function adminHeader()
             $attributes = self::parseShortcodeAttributes($matches[1]);
             
             if (!empty($attributes['name'])) {
-                require_once dirname(__FILE__) . '/front.php';
+                require_once dirname(__FILE__) . '/frontend/front.php';
                 return UformsFront::renderForm($attributes['name'], $attributes['template'] ?? 'default');
             } elseif (!empty($attributes['id'])) {
-                require_once dirname(__FILE__) . '/UformsHelper.php';
+                require_once dirname(__FILE__) . '/core/UformsHelper.php';
                 $form = UformsHelper::getForm($attributes['id']);
                 if ($form) {
-                    require_once dirname(__FILE__) . '/front.php';
+                    require_once dirname(__FILE__) . '/frontend/front.php';
                     return UformsFront::renderForm($form['name'], $attributes['template'] ?? 'default');
                 }
             }

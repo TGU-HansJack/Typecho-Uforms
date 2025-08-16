@@ -1,6 +1,11 @@
 <?php
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 
+// 启用详细错误日志
+ini_set('log_errors', 1);
+ini_set('error_log', __TYPECHO_ROOT_DIR__ . '/uforms_error.log');
+error_reporting(E_ALL);
+
 class UformsHelper {
     
     /**
@@ -52,6 +57,77 @@ class UformsHelper {
     }
     
     /**
+     * 验证字段
+     */
+    public static function validateField($type, $value, $config) {
+        $errors = array();
+        
+        // 根据类型验证
+        switch ($type) {
+            case 'email':
+                if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                    $errors[] = '邮箱格式不正确';
+                }
+                break;
+                
+            case 'url':
+                if (!filter_var($value, FILTER_VALIDATE_URL)) {
+                    $errors[] = 'URL格式不正确';
+                }
+                break;
+                
+            case 'number':
+            case 'decimal':
+                if (!is_numeric($value)) {
+                    $errors[] = '必须是数字';
+                } else {
+                    $numValue = floatval($value);
+                    if (isset($config['min']) && $numValue < $config['min']) {
+                        $errors[] = "不能小于{$config['min']}";
+                    }
+                    if (isset($config['max']) && $numValue > $config['max']) {
+                        $errors[] = "不能大于{$config['max']}";
+                    }
+                }
+                break;
+                
+            case 'tel':
+                if (!preg_match('/^[0-9\-\+\s\(\)]+$/', $value)) {
+                    $errors[] = '电话号码格式不正确';
+                }
+                break;
+                
+            case 'text':
+            case 'textarea':
+                $length = mb_strlen($value, 'UTF-8');
+                if (isset($config['minLength']) && $length < $config['minLength']) {
+                    $errors[] = "长度不能少于{$config['minLength']}个字符";
+                }
+                if (isset($config['maxLength']) && $length > $config['maxLength']) {
+                    $errors[] = "长度不能超过{$config['maxLength']}个字符";
+                }
+                if (!empty($config['pattern']) && !preg_match('/' . $config['pattern'] . '/', $value)) {
+                    $message = $config['errorMessage'] ?? '格式不正确';
+                    $errors[] = $message;
+                }
+                break;
+                
+            case 'password':
+                $length = mb_strlen($value, 'UTF-8');
+                if (isset($config['minLength']) && $length < $config['minLength']) {
+                    $errors[] = "密码长度不能少于{$config['minLength']}个字符";
+                }
+                break;
+                
+            case 'file':
+                // 文件验证在上传时处理
+                break;
+        }
+        
+        return $errors;
+    }
+    
+    /**
      * 获取表单字段
      */
     public static function getFormFields($form_id) {
@@ -59,7 +135,7 @@ class UformsHelper {
         return $db->fetchAll(
             $db->select()->from('table.uforms_fields')
                ->where('form_id = ?', $form_id)
-               ->order('sort_order ASC')
+               ->order('sort_order', Typecho_Db::SORT_ASC)
         );
     }
     
@@ -505,6 +581,44 @@ class UformsHelper {
         }
         
         return $slug;
+    }
+    
+    /**
+     * 检查垃圾内容
+     */
+    public static function isSpam($data) {
+        // 简单的垃圾内容检测
+        $spam_keywords = array('viagra', 'casino', 'lottery', 'winner', 'congratulations');
+        
+        foreach ($data as $value) {
+            if (is_string($value)) {
+                $value_lower = strtolower($value);
+                foreach ($spam_keywords as $keyword) {
+                    if (strpos($value_lower, $keyword) !== false) {
+                        return true;
+                    }
+                }
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * 记录垃圾内容
+     */
+    public static function logSpam($form_id, $ip, $reason, $data) {
+        $db = self::getDb();
+        
+        $spam_data = array(
+            'form_id' => $form_id,
+            'ip' => $ip,
+            'reason' => $reason,
+            'data' => json_encode($data),
+            'created_time' => time()
+        );
+        
+        return $db->query($db->insert('table.uforms_spam_log')->rows($spam_data));
     }
 }
 ?>

@@ -278,6 +278,142 @@ class UformsBuilder {
         }
     }
     
+    initSortable() {
+        if (typeof Sortable !== 'undefined') {
+            // 画布排序
+            const initCanvasSortable = () => {
+                const canvasDropZone = document.getElementById('form-canvas');
+                if (canvasDropZone) {
+                    // 如果已经存在canvasSortable，先销毁它
+                    if (this.canvasSortable) {
+                        this.canvasSortable.destroy();
+                    }
+                    
+                    this.canvasSortable = Sortable.create(canvasDropZone, {
+                        animation: 150,
+                        ghostClass: 'sortable-ghost',
+                        chosenClass: 'sortable-chosen',
+                        dragClass: 'sortable-drag',
+                        handle: '.field-drag-handle',
+                        onStart: () => {
+                            $('#form-canvas').addClass('sorting');
+                        },
+                        onEnd: () => {
+                            $('#form-canvas').removeClass('sorting');
+                            this.updateFieldOrder();
+                            this.markDirty();
+                        }
+                    });
+                }
+            };
+            
+            // 选项排序
+            const initOptionsSortable = () => {
+                const optionsList = document.querySelector('.options-list');
+                if (optionsList) {
+                    // 如果已经存在optionsSortable，先销毁它
+                    if (this.optionsSortable) {
+                        this.optionsSortable.destroy();
+                    }
+                    
+                    this.optionsSortable = Sortable.create(optionsList, {
+                        animation: 150,
+                        handle: '.option-drag-handle',
+                        onEnd: () => {
+                            this.updateOptions();
+                        }
+                    });
+                }
+            };
+            
+            // 条件规则排序
+            const initRulesSortable = () => {
+                const ruleBuilder = document.querySelector('.rule-builder');
+                if (ruleBuilder) {
+                    // 如果已经存在rulesSortable，先销毁它
+                    if (this.rulesSortable) {
+                        this.rulesSortable.destroy();
+                    }
+                    
+                    // 只对.rule-item元素进行排序
+                    this.rulesSortable = Sortable.create(ruleBuilder, {
+                        animation: 150,
+                        handle: '.rule-drag-handle',
+                        draggable: '.rule-item', // 指定可拖拽的元素
+                        onEnd: () => {
+                            // 更新规则顺序
+                            console.log('Rule order updated');
+                        }
+                    });
+                }
+            };
+            
+            // 使用MutationObserver替代DOMNodeInserted来监听新添加的元素
+            const observer = new MutationObserver((mutations) => {
+                let canvasAdded = false;
+                let optionsAdded = false;
+                let rulesAdded = false;
+                
+                mutations.forEach((mutation) => {
+                    mutation.addedNodes.forEach((node) => {
+                        if (node.nodeType === 1) { // 确保是元素节点
+                            // 检查是否添加了画布区域
+                            if (node.id && node.id === 'form-canvas') {
+                                canvasAdded = true;
+                            }
+                            // 检查是否添加了选项列表
+                            else if (node.classList && node.classList.contains('options-list')) {
+                                optionsAdded = true;
+                            }
+                            // 检查是否添加了规则构建器
+                            else if (node.classList && node.classList.contains('rule-builder')) {
+                                rulesAdded = true;
+                            }
+                            // 检查子元素中是否包含这些元素
+                            else if (node.querySelector) {
+                                if (node.querySelector('#form-canvas')) {
+                                    canvasAdded = true;
+                                }
+                                if (node.querySelector('.options-list')) {
+                                    optionsAdded = true;
+                                }
+                                if (node.querySelector('.rule-builder')) {
+                                    rulesAdded = true;
+                                }
+                            }
+                        }
+                    });
+                });
+                
+                // 延迟执行初始化，确保DOM完全加载
+                if (canvasAdded) {
+                    setTimeout(initCanvasSortable, 0);
+                }
+                if (optionsAdded) {
+                    setTimeout(initOptionsSortable, 0);
+                }
+                if (rulesAdded) {
+                    setTimeout(initRulesSortable, 0);
+                }
+            });
+            
+            // 开始观察DOM变化
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+            
+            // 初始化已存在的列表
+            setTimeout(() => {
+                initCanvasSortable();
+                initOptionsSortable();
+                initRulesSortable();
+            }, 0);
+        } else {
+            console.warn('SortableJS library not found');
+        }
+    }
+    
     initPresetOptions() {
         this.presetOptions = {
             yesno: ['是', '否'],
@@ -478,7 +614,7 @@ class UformsBuilder {
             <div class="canvas-field" id="${fieldId}" data-type="${fieldType}" data-field-id="${fieldId}">
                 <div class="field-header">
                     <span class="field-drag-handle" title="拖拽排序">
-                        <i class="icon-drag"></i>
+                        <i class="bars icon"></i>
                     </span>
                     <span class="field-label">${config.label}</span>
                     <div class="field-meta">
@@ -967,7 +1103,7 @@ class UformsBuilder {
             <div class="canvas-drop-zone" id="canvas-drop-zone">
                 <div class="drop-hint">
                     <div class="drop-icon">
-                        <i class="icon-drag"></i>
+                        <i class="bars icon"></i>
                     </div>
                     <h3>从左侧拖拽字段到这里开始创建表单</h3>
                     <p>或者点击左侧字段图标快速添加到表单</p>
@@ -1460,6 +1596,11 @@ class UformsBuilder {
         
         // 添加对应的预览模式class
         canvas.addClass(`preview-${mode}`);
+        
+        // 确保canvas-content类存在
+        if (!canvas.hasClass('canvas-content')) {
+            canvas.addClass('canvas-content');
+        }
         
         // 更新缩放比例显示
         const scales = {

@@ -271,7 +271,7 @@ $submissions = $db->fetchAll($select->order('s.created_time DESC')->limit($per_p
             
             $base_url = '?view=view&type=submissions';
             if ($form_id) $base_url .= '&form_id=' . $form_id;
-            if ($search) $base_url .= '&search=' . urlencode($search);
+            if ($search) $base_url .= '&search=' . safe_urlencode($search);
             if ($status_filter) $base_url .= '&status=' . $status_filter;
             ?>
             
@@ -445,7 +445,7 @@ $(document).ready(function() {
         const newStatus = $(this).val();
         
         $.ajax({
-            url: '<?php echo Helper::options()->adminUrl; ?>extending.php?panel=Uforms%2Fajax.php',
+            url: '<?php echo Helper::options()->adminUrl; ?>extending.php?panel=<?php echo safe_urlencode('Uforms/ajax.php'); ?>',
             method: 'POST',
             data: {
                 action: 'change_status',
@@ -476,7 +476,7 @@ $(document).ready(function() {
     
     function loadSubmissionDetails(submissionId) {
         $.ajax({
-            url: '<?php echo Helper::options()->adminUrl; ?>extending.php?panel=Uforms%2Fajax.php',
+            url: '<?php echo Helper::options()->adminUrl; ?>extending.php?panel=<?php echo safe_urlencode('Uforms/ajax.php'); ?>',
             method: 'GET',
             data: {
                 action: 'get_submission',
@@ -553,7 +553,7 @@ $(document).ready(function() {
         const notes = $('#submission-notes').val();
         
         $.ajax({
-            url: '<?php echo Helper::options()->adminUrl; ?>extending.php?panel=Uforms%2Fajax.php',
+            url: '<?php echo Helper::options()->adminUrl; ?>extending.php?panel=<?php echo safe_urlencode('Uforms/ajax.php'); ?>',
             method: 'POST',
             data: {
                 action: 'save_notes',

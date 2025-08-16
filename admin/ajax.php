@@ -23,7 +23,8 @@ if (!class_exists('UformsHelper')) {
 
 // 处理 AJAX 请求
 if ($request->isPost()) {
-    $ajax_action = $request->get('action');
+    // 获取实际的 AJAX 操作，优先使用 ajax_action 参数，回退到 action 参数
+    $ajax_action = $request->get('ajax_action', $request->get('action'));
     
     switch ($ajax_action) {
         case 'save_form':
@@ -178,17 +179,62 @@ if ($request->isPost()) {
             }
             exit;
             
+        case 'get_form_code':
+            try {
+                $form_id = $request->get('form_id');
+                
+                if (!$form_id) {
+                    throw new Exception('缺少表单ID参数');
+                }
+                
+                // 获取表单信息
+                $form = $db->fetchRow(
+                    $db->select('*')->from('table.uforms_forms')
+                       ->where('id = ?', $form_id)
+                );
+                
+                if (!$form) {
+                    throw new Exception('表单不存在');
+                }
+                
+                // 生成各种代码
+                $site_url = $options->siteUrl;
+                $form_url = rtrim($site_url, '/') . '/uforms/form/' . $form_id;
+                $iframe_code = '<iframe src="' . $form_url . '" width="100%" height="600px" frameborder="0"></iframe>';
+                $shortcode = '[uforms id="' . $form_id . '"]';
+                $api_url = rtrim($site_url, '/') . '/uforms/api/submit/' . $form_id;
+                
+                header('Content-Type: application/json; charset=UTF-8');
+                echo json_encode(array(
+                    'success' => true,
+                    'data' => array(
+                        'link' => $form_url,
+                        'iframe' => $iframe_code,
+                        'shortcode' => $shortcode,
+                        'api' => $api_url
+                    )
+                ));
+                
+            } catch (Exception $e) {
+                header('Content-Type: application/json; charset=UTF-8');
+                echo json_encode(array(
+                    'success' => false,
+                    'message' => $e->getMessage()
+                ));
+            }
+            exit;
+            
         default:
             header('Content-Type: application/json; charset=UTF-8');
             echo json_encode(array(
                 'success' => false,
-                'message' => '未知的操作'
+                'message' => '未知的操作: ' . $ajax_action
             ));
             exit;
     }
 }
 
-// 如果不是POST请求，返回405错误
+// 如果不是AJAX POST请求，返回405错误
 header('HTTP/1.1 405 Method Not Allowed');
 header('Content-Type: application/json; charset=UTF-8');
 echo json_encode(array(

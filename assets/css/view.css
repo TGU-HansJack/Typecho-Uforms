@@ -206,6 +206,300 @@
     color: var(--uform-text-light);
 }
 
+/* 统计卡片 */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: #fff;
+    border-radius: var(--uform-radius);
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid var(--uform-border);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.stat-card.primary {
+    border-top: 3px solid var(--uform-primary);
+}
+
+.stat-card.warning {
+    border-top: 3px solid var(--uform-warning);
+}
+
+.stat-card.success {
+    border-top: 3px solid var(--uform-success);
+}
+
+.stat-card.info {
+    border-top: 3px solid var(--uform-info);
+}
+
+.stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.stat-header h3 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--uform-text-light);
+    font-weight: 500;
+}
+
+.stat-header i.icon {
+    font-size: 24px;
+    opacity: 0.7;
+}
+
+.stat-card.primary .stat-header i.icon {
+    color: var(--uform-primary);
+}
+
+.stat-card.warning .stat-header i.icon {
+    color: var(--uform-warning);
+}
+
+.stat-card.success .stat-header i.icon {
+    color: var(--uform-success);
+}
+
+.stat-card.info .stat-header i.icon {
+    color: var(--uform-info);
+}
+
+.stat-body {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--uform-dark);
+}
+
+.stat-growth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.growth.positive {
+    color: var(--uform-success);
+}
+
+.growth.negative {
+    color: var(--uform-error);
+}
+
+.stat-percentage {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--uform-warning);
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--uform-text-light);
+}
+
+/* 图表卡片 */
+.chart-card {
+    background: #fff;
+    border-radius: var(--uform-radius);
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid var(--uform-border);
+    margin-bottom: 30px;
+}
+
+.chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.chart-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--uform-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.chart-header h3 i.icon {
+    color: var(--uform-primary);
+}
+
+.chart-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.chart-body {
+    min-height: 300px;
+}
+
+/* 活动/最近提交 */
+.activity-section {
+    background: #fff;
+    border-radius: var(--uform-radius);
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 1px solid var(--uform-border);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.section-header h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--uform-dark);
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.activity-item {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border-radius: var(--uform-radius);
+    border: 1px solid var(--uform-border);
+    transition: background-color 0.2s ease;
+}
+
+.activity-item:hover {
+    background-color: rgba(0,0,0,0.02);
+}
+
+.activity-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--uform-bg-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.activity-icon i.icon {
+    color: var(--uform-primary);
+}
+
+.activity-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.activity-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.activity-title strong {
+    font-size: 16px;
+    color: var(--uform-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.activity-status {
+    font-size: 12px !important;
+    padding: 4px 8px !important;
+}
+
+.status-new {
+    background: #e1f0fa !important;
+    color: var(--uform-primary) !important;
+}
+
+.status-read {
+    background: #e8f5e9 !important;
+    color: var(--uform-success) !important;
+}
+
+.status-spam {
+    background: #fdedeb !important;
+    color: var(--uform-error) !important;
+}
+
+.activity-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 13px;
+    color: var(--uform-text-muted);
+    margin-bottom: 8px;
+}
+
+.activity-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--uform-text-light);
+}
+
+.field-preview {
+    background: var(--uform-bg-light);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.activity-actions {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--uform-text-muted);
+}
+
+.empty-state i.icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 16px;
+}
+
 /* 图表区域 */
 .charts-grid {
     display: grid;

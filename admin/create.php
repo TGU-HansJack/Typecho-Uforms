@@ -1024,16 +1024,110 @@ IP地址：{ip_address}
 <script>
 // 全局变量
 window.uformsConfig = {
-    formId: <?php echo $form_id ? $form_id : 'null'; ?>,
-    ajaxUrl: '<?php echo $options->adminUrl; ?>extending.php?panel=Uforms%2Fadmin%2Fajax.php',
+    formId: <?php echo $form_id ? (int)$form_id : 'null'; ?>,
+    ajaxUrl: '<?php echo $options->adminUrl . 'extending.php?panel=' . safe_urlencode('Uforms/admin/ajax.php'); ?>',
     pluginUrl: '<?php echo $options->pluginUrl; ?>/Uforms',
     siteUrl: '<?php echo $options->siteUrl; ?>',
     existingFields: <?php echo json_encode($fields); ?>,
     existingConfig: <?php echo $form ? json_encode(json_decode($form['config'], true)) : '{}'; ?>,
     existingSettings: <?php echo $form ? json_encode(json_decode($form['settings'], true)) : '{}'; ?>
 };
+
+// 代码标签切换功能
+document.addEventListener('DOMContentLoaded', function() {
+    // 代码标签切换
+    const codeTabs = document.querySelectorAll('.code-tab');
+    codeTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            const tabName = this.getAttribute('data-tab');
+            
+            // 更新激活的标签
+            document.querySelectorAll('.code-tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            // 显示对应的内容
+            document.querySelectorAll('.code-tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName + '-tab').classList.add('active');
+        });
+    });
+    
+    // 关闭模态框
+    const closeButtons = document.querySelectorAll('.modal-close');
+    closeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            this.closest('.modal').style.display = 'none';
+        });
+    });
+    
+    // 点击模态框外部关闭
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+    });
+    
+    // 更新iframe代码
+    const updateIframeBtn = document.getElementById('update-iframe');
+    if (updateIframeBtn) {
+        updateIframeBtn.addEventListener('click', function() {
+            const width = document.getElementById('iframe-width').value || '100%';
+            const height = document.getElementById('iframe-height').value || '600px';
+            const formLink = document.getElementById('form-link').value;
+            
+            const iframeCode = `<iframe src="${formLink}" width="${width}" height="${height}" frameborder="0"></iframe>`;
+            document.getElementById('iframe-code').value = iframeCode;
+        });
+    }
+    
+    // 复制功能
+    const copyButtons = document.querySelectorAll('[id^="copy-"]');
+    copyButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const targetId = this.id.replace('copy-', '');
+            let targetElement;
+            
+            switch (targetId) {
+                case 'link':
+                    targetElement = document.getElementById('form-link');
+                    break;
+                case 'iframe':
+                    targetElement = document.getElementById('iframe-code');
+                    break;
+                case 'shortcode':
+                    targetElement = document.getElementById('shortcode');
+                    break;
+                case 'api':
+                    targetElement = document.getElementById('api-url');
+                    break;
+            }
+            
+            if (targetElement) {
+                targetElement.select();
+                document.execCommand('copy');
+                
+                // 显示复制成功提示
+                const originalText = this.textContent;
+                this.textContent = '已复制';
+                setTimeout(() => {
+                    this.textContent = originalText;
+                }, 2000);
+            }
+        });
+    });
+});
 </script>
 
-<script src="<?php echo $options->pluginUrl; ?>/Uforms/assets/js/sortable.min.js"></script>
-<script src="<?php echo $options->pluginUrl; ?>/Uforms/assets/js/uformsbuilder.js"></script>
-<link rel="stylesheet" href="<?php echo $options->pluginUrl; ?>/Uforms/assets/css/create.css">
+<?php
+// Helper to resolve asset URLs correctly
+function uforms_asset($path) {
+    echo htmlspecialchars($path);
+}
+?>
+<script src="<?php uforms_asset($options->pluginUrl . '/Uforms/assets/js/sortable.min.js'); ?>"></script>
+<script src="<?php uforms_asset($options->pluginUrl . '/Uforms/assets/js/uformsbuilder.js'); ?>"></script>
+<link rel="stylesheet" href="<?php uforms_asset($options->pluginUrl . '/Uforms/assets/css/create.css'); ?>">

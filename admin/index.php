@@ -11,8 +11,21 @@ if (!$user->pass('administrator')) {
     throw new Typecho_Widget_Exception(_t('禁止访问'), 403);
 }
 
+// 安全的URL编码函数
+if (!function_exists('safe_urlencode')) {
+    function safe_urlencode($string) {
+        return urlencode((string)($string ?? ''));
+    }
+}
+
 // 引入必要的文件
 require_once 'admin-functions.php';
+
+// 处理 AJAX 请求
+if ($request->isPost() && $request->get('action') === 'ajax') {
+    require_once 'ajax.php';
+    exit;
+}
 
 // 获取当前视图
 $view = $request->get('view', 'manage');
@@ -51,18 +64,18 @@ if (!in_array($view, $allowed_views)) {
             <h1>Uforms 表单系统</h1>
             <nav class="uforms-nav">
                 <?php
-                $base_url = $options->adminUrl . 'extending.php?panel=Uforms/index.php';
+                $base_url = $options->adminUrl . 'extending.php?panel=' . safe_urlencode('Uforms/index.php') . '&view=';
                 ?>
-                <a href="<?php echo $base_url; ?>&view=manage" class="<?php echo $view === 'manage' ? 'active' : ''; ?>">
+                <a href="<?php echo $base_url . safe_urlencode('manage'); ?>" class="<?php echo $view === 'manage' ? 'active' : ''; ?>">
                     <i class="list icon"></i>管理
                 </a>
-                <a href="<?php echo $base_url; ?>&view=create" class="<?php echo $view === 'create' ? 'active' : ''; ?>">
+                <a href="<?php echo $base_url . safe_urlencode('create'); ?>" class="<?php echo $view === 'create' ? 'active' : ''; ?>">
                     <i class="plus icon"></i>创建
                 </a>
-                <a href="<?php echo $base_url; ?>&view=view" class="<?php echo $view === 'view' ? 'active' : ''; ?>">
+                <a href="<?php echo $base_url . safe_urlencode('view'); ?>" class="<?php echo $view === 'view' ? 'active' : ''; ?>">
                     <i class="chart line icon"></i>视图
                 </a>
-                <a href="<?php echo $base_url; ?>&view=notifications" class="<?php echo $view === 'notifications' ? 'active' : ''; ?>">
+                <a href="<?php echo $base_url . safe_urlencode('notifications'); ?>" class="<?php echo $view === 'notifications' ? 'active' : ''; ?>">
                     <i class="bell outline icon"></i>通知
                 </a>
             </nav>
@@ -75,7 +88,7 @@ if (!in_array($view, $allowed_views)) {
             if (file_exists($file_path)) {
                 include $file_path;
             } else {
-                echo '<div class="error">页面不存在：' . htmlspecialchars($view) . '</div>';
+                echo '<div class="error">页面不存在：' . htmlspecialchars($view ?? 'unknown') . '</div>';
                 include 'manage.php';  // 默认显示管理页面
             }
             ?>

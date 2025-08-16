@@ -41,17 +41,19 @@ body {
 .manage-container {
     padding: 20px;
     background: var(--uform-bg-light);
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .main {
     background: #fff;
     margin: 0;
-    padding: 0;
-    border: none;
-    box-shadow: none;
-    flex: 1;
-    width: 100%;
+    padding: 20px;
+    border-radius: var(--uform-radius);
+    box-shadow: var(--uform-shadow);
+    border: 1px solid var(--uform-border);
 }
+
 /* 顶部导航 - 全宽 */
 .uforms-header {
     background: #fff;
@@ -302,6 +304,10 @@ body {
     color: var(--uform-dark);
 }
 
+.forms-table tbody tr:hover {
+    background-color: rgba(0,0,0,0.02);
+}
+
 .check-column {
     width: 40px;
     text-align: center;
@@ -329,132 +335,65 @@ body {
 }
 
 .actions-column {
-    width: 150px;
+    width: 120px;
     text-align: center;
 }
 
-.form-title strong {
-    display: block;
-    margin-bottom: 5px;
+.form-title {
+    font-weight: 600;
     color: var(--uform-dark);
-}
-
-.form-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
+    margin-bottom: 5px;
+    display: block;
 }
 
 .form-name {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--uform-text-muted);
-    font-family: monospace;
 }
 
-.form-description {
+.status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
     font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.status-badge.draft {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.published {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-badge.archived {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.submission-count {
+    font-weight: 600;
+    color: var(--uform-primary);
+}
+
+.author-name {
     color: var(--uform-text-light);
 }
 
-/* 状态标签 */
-.status-badge {
-    font-size: 12px;
-    padding: 4px 8px;
+.date-time {
+    color: var(--uform-text-muted);
+    font-size: 13px;
 }
-
-.status-badge.status-draft {
-    background: #f0f0f0;
-    color: #666;
-}
-
-.status-badge.status-published {
-    background: rgba(39, 174, 96, 0.1);
-    color: var(--uform-success);
-}
-
-.status-badge.status-archived {
-    background: rgba(243, 156, 18, 0.1);
-    color: var(--uform-warning);
-}
-
-/* 操作按钮 */
-.row-actions {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-/* 下拉菜单 */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    z-index: 1000;
-    min-width: 160px;
-    display: none;
-}
-
-.dropdown:hover .dropdown-menu {
-    display: block;
-}
-
-.dropdown-menu a {
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    color: #333;
-    text-decoration: none;
-    font-size: 14px;
-    border-bottom: 1px solid #eee;
-}
-
-.dropdown-menu a:last-child {
-    border-bottom: none;
-}
-
-.dropdown-menu a:hover {
-    background: #f8f9fa;
-}
-
-.dropdown-menu i {
-    margin-right: 8px;
-    width: 16px;
-    text-align: center;
-}
-
-.dropdown-divider {
-    height: 1px;
-    background: #eee;
-    margin: 5px 0;
-}
-
-/* 分页 */
-.ui.pagination.menu {
-    margin: 20px 0;
-    justify-content: center;
-}
-
-.ui.pagination.menu .item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
 
 /* 空状态 */
 .empty-state {
     text-align: center;
     padding: 60px 20px;
-    color: var(--uform-text-light);
+    color: var(--uform-text-muted);
 }
 
 .empty-icon {
@@ -466,13 +405,43 @@ body {
 .empty-state h3 {
     margin: 0 0 10px 0;
     color: var(--uform-dark);
+    font-size: 20px;
 }
 
 .empty-state p {
     margin: 0 0 20px 0;
+    font-size: 16px;
 }
 
-/* 响应式设计 */
+/* 分页 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    gap: 10px;
+}
+
+.pagination .page-info {
+    color: var(--uform-text-light);
+    font-size: 14px;
+}
+
+.pagination .ui.buttons {
+    box-shadow: none;
+}
+
+.pagination .ui.button {
+    box-shadow: 0 0 0 1px var(--uform-border) inset;
+}
+
+.pagination .ui.button.active {
+    background: var(--uform-primary);
+    color: white;
+    border-color: var(--uform-primary);
+}
+
+/* 响应式 */
 @media (max-width: 768px) {
     .toolbar {
         flex-direction: column;
@@ -484,8 +453,8 @@ body {
         justify-content: center;
     }
     
-    .stats-cards {
-        grid-template-columns: 1fr;
+    .search-box input {
+        width: 100%;
     }
     
     .forms-table {
@@ -493,9 +462,11 @@ body {
         overflow-x: auto;
     }
     
-    .forms-table th,
-    .forms-table td {
-        white-space: nowrap;
+    .stats-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .pagination {
+        flex-wrap: wrap;
     }
 }
-

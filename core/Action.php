@@ -4,8 +4,10 @@
  */
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 
-require_once 'UformsHelper.php';
-require_once 'front.php';
+// 确保必要的文件被加载
+$uformsDir = dirname(__FILE__);
+require_once $uformsDir . '/UformsHelper.php';
+require_once $uformsDir . '/front.php';
 
 class Uforms_Action extends Typecho_Widget implements Widget_Interface_Do
 {
